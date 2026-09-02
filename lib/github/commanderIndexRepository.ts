@@ -116,6 +116,13 @@ async function fetchCommanderCacheFromScryfall(): Promise<CommanderCache> {
 	};
 }
 
+function commanderNeedsHydration(commander: CommanderSummary | undefined): boolean {
+	if (!commander)
+		return true;
+
+	return !Array.isArray(commander.colors) || commander.colors.length === 0 && !commander.manaCost;
+}
+
 async function loadCommanderCache(): Promise<CommanderCache | null> {
 	try {
 		const cache = await readJson<CommanderCache>(CACHE_PATH);
@@ -132,12 +139,16 @@ async function saveCommanderCache(cache: CommanderCache) {
 async function getCommanderCache(): Promise<CommanderCache> {
 	const cache = await loadCommanderCache();
 	const searchUrl = `${SEARCH_URL}?q=${encodeURIComponent(SEARCH_QUERY)}&unique=cards&order=name&dir=asc&page=1`;
-	const cacheNeedsImageBackfill = Boolean(cache?.commanders.some(commander => !commander.imageUrl));
+	const cacheNeedsHydration = Boolean(
+		cache?.commanders.some(commander =>
+			!Array.isArray(commander.colors) || !commander.imageUrl
+		)
+	);
 
 	try {
 		const latest = await fetchCommanderPage(searchUrl);
 
-		if (!cache || cache.totalCards !== latest.total_cards || cacheNeedsImageBackfill) {
+		if (!cache || cache.totalCards !== latest.total_cards || cacheNeedsHydration) {
 			const refreshed = await fetchCommanderCacheFromScryfall();
 			await saveCommanderCache(refreshed);
 			return refreshed;
@@ -186,7 +197,7 @@ export async function resolveCommandersById(
 
 		const direct = commandersById.get(id);
 		if (direct) {
-			if (direct.imageUrl) {
+			if (Array.isArray(direct.colors) && direct.colors.length >= 0 && direct.imageUrl) {
 				resolved.push(direct);
 				continue;
 			}
