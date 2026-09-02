@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { isLocalAuthBypassEnabled } from "./localAuth";
 
 export function useEditor() {
-	const [isEditor, setIsEditor] = useState(false);
-	const [ready, setReady] = useState(false);
+	const [isEditor, setIsEditor] = useState(() => isLocalAuthBypassEnabled());
+	const [ready, setReady] = useState(() => isLocalAuthBypassEnabled());
 
 	useEffect(() => {
+		if (isLocalAuthBypassEnabled())
+			return;
+
 		let cancelled = false;
 
 		async function check() {

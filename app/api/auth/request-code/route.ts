@@ -1,8 +1,13 @@
 import { getAllowedEmails } from "@/lib/auth/allowedEmails";
+import { isLocalAuthBypassEnabled } from "@/lib/auth/localAuth";
 import { setOtp } from "@/lib/auth/otpStore";
 import { sendLoginCode } from "@/lib/email/sendLoginCode";
 
 export async function POST(req: Request) {
+	if (isLocalAuthBypassEnabled()) {
+		return Response.json({ ok: true });
+	}
+
 	const { email } = await req.json();
 	const normalized = String(email).toLowerCase().trim();
 

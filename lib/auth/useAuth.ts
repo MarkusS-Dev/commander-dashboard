@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getLocalAuthEmail, isLocalAuthBypassEnabled } from "./localAuth";
 
 export type AuthState =
 	| { status: "loading" }
@@ -8,9 +9,16 @@ export type AuthState =
 	| { status: "authenticated"; email: string };
 
 export function useAuth(): AuthState {
-	const [state, setState] = useState<AuthState>({ status: "loading" });
+	const [state, setState] = useState<AuthState>(() =>
+		isLocalAuthBypassEnabled()
+			? { status: "authenticated", email: getLocalAuthEmail() }
+			: { status: "loading" }
+	);
 
 	useEffect(() => {
+		if (isLocalAuthBypassEnabled())
+			return;
+
 		check();
 	}, []);
 

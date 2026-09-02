@@ -9,7 +9,6 @@ import AuthModal from "@/components/AuthModal";
 const tabs = [
 	{ label: "Dashboard", href: "/" },
 	{ label: "Games", href: "/games" },
-	{ label: "Commanders", href: "/commanders" },
 	{ label: "Decks", href: "/decks" },
 	{ label: "Players", href: "/players" },
 ];

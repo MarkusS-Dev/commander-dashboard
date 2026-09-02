@@ -2,17 +2,19 @@ export type Deck = {
 	id: number;
 	name: string;
 	playerId: number;
-	commanderAId: number;
-	commanderBId?: number;
+	commanderAId: string | number;
+	commanderBId?: string | number;
 };
+
+export type CommanderId = string | number;
 
 
 export function createDeck(
 	decks: Deck[],
 	name: string,
 	playerId: number,
-	commanderAId: number,
-	commanderBId?: number
+	commanderAId: CommanderId,
+	commanderBId?: CommanderId
 ): Deck {
 	const trimmedName = name.trim();
 	if (!trimmedName)

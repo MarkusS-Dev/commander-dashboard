@@ -1,9 +1,19 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { getAllowedEmails } from "./allowedEmails";
+import { getLocalAuthEmail, isLocalAuthBypassEnabled } from "./localAuth";
 import { verifySessionToken } from "./sessionToken";
 
-export async function requireEditorSession() {
+type Session = {
+	email: string;
+};
+
+
+export async function requireEditorSession(): Promise<Session> {
+	if (isLocalAuthBypassEnabled()) {
+		return { email: getLocalAuthEmail() };
+	}
+
 	const cookieStore = await cookies();
 	const token = cookieStore.get("session")?.value;
 

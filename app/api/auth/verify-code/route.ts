@@ -1,6 +1,7 @@
 // app/api/auth/verify-code/route.ts
 import { cookies } from "next/headers";
 import { getAllowedEmails } from "@/lib/auth/allowedEmails";
+import { getLocalAuthEmail, isLocalAuthBypassEnabled } from "@/lib/auth/localAuth";
 import { consumeOtp } from "@/lib/auth/otpStore";
 import { signSessionToken } from "@/lib/auth/sessionToken";
 
@@ -10,6 +11,24 @@ type VerifyCodeRequest = {
 };
 
 export async function POST(req: Request) {
+	if (isLocalAuthBypassEnabled()) {
+		const token = signSessionToken({
+			email: getLocalAuthEmail(),
+			issuedAtUnixMs: Date.now(),
+		});
+
+		const cookieStore = await cookies();
+		cookieStore.set("session", token, {
+			httpOnly: true,
+			secure: false,
+			sameSite: "lax",
+			path: "/",
+			maxAge: 60 * 60 * 24 * 30,
+		});
+
+		return Response.json({ ok: true });
+	}
+
 	const body = (await req.json()) as Partial<VerifyCodeRequest>;
 	const email = (body.email ?? "").trim().toLowerCase();
 	const code = (body.code ?? "").trim();
@@ -46,7 +65,7 @@ export async function POST(req: Request) {
 
 	cookieStore.set("session", token, {
 		httpOnly: true,
-		secure: true,
+		secure: process.env.NODE_ENV === "production",
 		sameSite: "lax",
 		path: "/",
 		maxAge: 60 * 60 * 24 * 30, // 30 days

@@ -37,12 +37,15 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
 	await requireEditorSession(); // 🔐
 
-	const { id, color } = await req.json();
+	const { id, name, color } = await req.json();
 
 	if (typeof id !== "number")
 		return new Response("Player id is required", { status: 400 });
 
-	if (typeof color !== "string")
+	if (typeof name !== "string" || !name.trim())
+		return new Response("Name is required", { status: 400 });
+
+	if (typeof color !== "string" || !color.trim())
 		return new Response("Color is required", { status: 400 });
 
 	const players = await loadPlayers();
@@ -51,6 +54,7 @@ export async function PUT(req: Request) {
 	if (!player)
 		return new Response("Player not found", { status: 404 });
 
+	player.name = name.trim();
 	player.color = color;
 	await savePlayers(players);
 
