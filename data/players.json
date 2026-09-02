@@ -1,0 +1,32 @@
+[
+  {
+    "id": 2,
+    "name": "Malvin K",
+    "color": "#d61f1f"
+  },
+  {
+    "id": 3,
+    "name": "Tore K",
+    "color": "#00ff08"
+  },
+  {
+    "id": 4,
+    "name": "Markus K",
+    "color": "#000000"
+  },
+  {
+    "id": 1,
+    "name": "Markus S",
+    "color": "#ff00d4"
+  },
+  {
+    "id": 5,
+    "name": "Eirik",
+    "color": "#001eff"
+  },
+  {
+    "id": 6,
+    "name": "Kurt",
+    "color": "#8c00ff"
+  }
+]

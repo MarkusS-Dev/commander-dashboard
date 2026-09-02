@@ -1,0 +1,108 @@
+[
+  {
+    "id": 1,
+    "date": "2026-01-05",
+    "deckIds": [
+      5,
+      12,
+      11,
+      10
+    ],
+    "winnerDeckId": 5,
+    "notes": "Slow burner"
+  },
+  {
+    "id": 2,
+    "date": "2026-01-12",
+    "deckIds": [
+      15,
+      14,
+      16,
+      17,
+      13
+    ],
+    "winnerDeckId": 17,
+    "notes": "3:30 never again !"
+  },
+  {
+    "id": 3,
+    "date": "2026-01-26",
+    "deckIds": [
+      18,
+      19,
+      3,
+      21,
+      20
+    ],
+    "winnerDeckId": 21,
+    "notes": "Malvin vant med storm tok 35 min :D"
+  },
+  {
+    "id": 4,
+    "date": "2026-02-10",
+    "deckIds": [
+      24,
+      23,
+      22
+    ],
+    "winnerDeckId": 24,
+    "notes": ""
+  },
+  {
+    "id": 5,
+    "date": "2026-02-10",
+    "deckIds": [
+      24,
+      23,
+      22
+    ],
+    "winnerDeckId": 23,
+    "notes": ""
+  },
+  {
+    "id": 6,
+    "date": "2026-02-17",
+    "deckIds": [
+      25,
+      26,
+      27,
+      21
+    ],
+    "winnerDeckId": 26,
+    "notes": ""
+  },
+  {
+    "id": 7,
+    "date": "2026-02-17",
+    "deckIds": [
+      30,
+      29,
+      27,
+      21
+    ],
+    "winnerDeckId": 30,
+    "notes": ""
+  },
+  {
+    "id": 8,
+    "date": "2026-03-10",
+    "deckIds": [
+      31,
+      32,
+      33
+    ],
+    "winnerDeckId": 31,
+    "notes": ""
+  },
+  {
+    "id": 9,
+    "date": "2026-03-10",
+    "deckIds": [
+      19,
+      34,
+      33
+    ],
+    "winnerDeckId": 34,
+    "notes": ""
+  }
+]
