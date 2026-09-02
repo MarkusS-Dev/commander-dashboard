@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { getAllowedEmails } from "@/lib/auth/allowedEmails";
 import { getLocalAuthEmail, isLocalAuthBypassEnabled } from "@/lib/auth/localAuth";
-import { consumeOtp } from "@/lib/auth/otpStore";
+import { verifyOtpToken } from "@/lib/auth/otpToken";
 import { signSessionToken } from "@/lib/auth/sessionToken";
 
 type VerifyCodeRequest = {
@@ -47,9 +47,30 @@ export async function POST(req: Request) {
 		);
 	}
 
-	const isValid = consumeOtp(email, code);
+	const cookieStore = await cookies();
+	const challengeToken = cookieStore.get("otp_challenge")?.value;
+
+	if (!challengeToken) {
+		return Response.json(
+			{ error: "Invalid or expired code" },
+			{ status: 401 }
+		);
+	}
+
+	let isValid = false;
+
+	try {
+		const challenge = verifyOtpToken(challengeToken);
+		isValid =
+			challenge.email === email &&
+			challenge.code === code &&
+			Date.now() <= challenge.expiresAtUnixMs;
+	} catch {
+		isValid = false;
+	}
 
 	if (!isValid) {
+		cookieStore.delete("otp_challenge");
 		return Response.json(
 			{ error: "Invalid or expired code" },
 			{ status: 401 }
@@ -61,8 +82,7 @@ export async function POST(req: Request) {
 		issuedAtUnixMs: Date.now(),
 	});
 
-	const cookieStore = await cookies();
-
+	cookieStore.delete("otp_challenge");
 	cookieStore.set("session", token, {
 		httpOnly: true,
 		secure: process.env.NODE_ENV === "production",

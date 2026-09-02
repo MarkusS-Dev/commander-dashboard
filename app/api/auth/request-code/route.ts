@@ -1,6 +1,7 @@
+import { cookies } from "next/headers";
 import { getAllowedEmails } from "@/lib/auth/allowedEmails";
 import { isLocalAuthBypassEnabled } from "@/lib/auth/localAuth";
-import { setOtp } from "@/lib/auth/otpStore";
+import { signOtpToken } from "@/lib/auth/otpToken";
 import { sendLoginCode } from "@/lib/email/sendLoginCode";
 
 export async function POST(req: Request) {
@@ -25,12 +26,23 @@ export async function POST(req: Request) {
 
 	// Generate 6-digit code
 	const code = Math.floor(100000 + Math.random() * 900000).toString();
-
-	// Store for 10 minutes
-	setOtp(normalized, code, 10);
+	const expiresAtUnixMs = Date.now() + 10 * 60 * 1000;
 
 	// Send email
 	await sendLoginCode(normalized, code);
+
+	const cookieStore = await cookies();
+	cookieStore.set("otp_challenge", signOtpToken({
+		email: normalized,
+		code,
+		expiresAtUnixMs,
+	}), {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		sameSite: "lax",
+		path: "/",
+		maxAge: 60 * 10,
+	});
 
 	return Response.json({ ok: true });
 }
