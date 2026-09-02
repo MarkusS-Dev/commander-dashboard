@@ -21,6 +21,7 @@ type ScryfallCard = {
 type CommanderSummary = {
 	id: string;
 	name: string;
+	colors: string[];
 	imageUrl?: string;
 };
 
@@ -44,6 +45,7 @@ async function fetchCommanderById(id: string): Promise<CommanderSummary | null> 
 		return {
 			id: card.id,
 			name: card.name,
+			colors: card.colors ?? [],
 			imageUrl: commanderImageUrl(card),
 		};
 	} catch {
@@ -79,6 +81,11 @@ async function hydrateDeckCommanderData(decks: Deck[]): Promise<Deck[]> {
 				changed = true;
 			}
 
+			if (!nextDeck.commanderAColors?.length && commanderA.colors.length > 0) {
+				nextDeck.commanderAColors = commanderA.colors;
+				changed = true;
+			}
+
 			if (!nextDeck.commanderAImageUrl && commanderA.imageUrl) {
 				nextDeck.commanderAImageUrl = commanderA.imageUrl;
 				changed = true;
@@ -88,6 +95,11 @@ async function hydrateDeckCommanderData(decks: Deck[]): Promise<Deck[]> {
 		if (commanderB) {
 			if (!nextDeck.commanderBName) {
 				nextDeck.commanderBName = commanderB.name;
+				changed = true;
+			}
+
+			if (!nextDeck.commanderBColors?.length && commanderB.colors.length > 0) {
+				nextDeck.commanderBColors = commanderB.colors;
 				changed = true;
 			}
 

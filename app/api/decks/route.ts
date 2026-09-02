@@ -54,8 +54,10 @@ export async function POST(req: Request) {
 		{
 			commanderAName: resolvedA?.name ?? (typeof commanderAName === "string" ? commanderAName : undefined),
 			commanderAImageUrl: resolvedA?.imageUrl ?? (typeof commanderAImageUrl === "string" ? commanderAImageUrl : undefined),
+			commanderAColors: resolvedA?.colors,
 			commanderBName: resolvedB?.name ?? (typeof commanderBName === "string" ? commanderBName : undefined),
 			commanderBImageUrl: resolvedB?.imageUrl ?? (typeof commanderBImageUrl === "string" ? commanderBImageUrl : undefined),
+			commanderBColors: resolvedB?.colors,
 		}
 	);
 
@@ -143,12 +145,14 @@ export async function PUT(req: Request) {
 		commanderAId,
 		commanderAName: resolvedA?.name ?? (typeof commanderAName === "string" ? commanderAName : undefined),
 		commanderAImageUrl: resolvedA?.imageUrl ?? (typeof commanderAImageUrl === "string" ? commanderAImageUrl : undefined),
+		commanderAColors: resolvedA?.colors ?? decks[index].commanderAColors,
 		commanderBId:
 			(commanderBId == null || (typeof commanderBId === "string" && commanderBId.trim() === ""))
 				? undefined
 				: commanderBId,
 		commanderBName: resolvedB?.name ?? (typeof commanderBName === "string" ? commanderBName : undefined),
 		commanderBImageUrl: resolvedB?.imageUrl ?? (typeof commanderBImageUrl === "string" ? commanderBImageUrl : undefined),
+		commanderBColors: resolvedB?.colors ?? decks[index].commanderBColors,
 	};
 
 	await saveDecks(decks);

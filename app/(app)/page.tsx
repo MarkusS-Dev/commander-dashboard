@@ -28,8 +28,10 @@ type Deck = {
 	commanderBId?: string | number;
 	commanderAName?: string;
 	commanderAImageUrl?: string;
+		commanderAColors?: string[];
 	commanderBName?: string;
 	commanderBImageUrl?: string;
+		commanderBColors?: string[];
 };
 
 type CommanderSummary = {
@@ -417,6 +419,7 @@ export default function DashboardPage() {
 				commanderIds.forEach((rawCommanderId, index) => {
 					const commanderId = String(rawCommanderId);
 					const commander = commandersById[commanderId];
+					const savedColors = index === 0 ? deck.commanderAColors : deck.commanderBColors;
 
 					const fallbackName =
 						index === 0
@@ -428,7 +431,7 @@ export default function DashboardPage() {
 							? deck.commanderAImageUrl
 							: deck.commanderBImageUrl ?? deck.commanderAImageUrl;
 
-					const colors = (commander?.colors ?? [])
+					const colors = (savedColors ?? commander?.colors ?? [])
 						.map(color => SYMBOL_TO_MANA_COLOR[color])
 						.filter((color): color is ManaColor => Boolean(color));
 

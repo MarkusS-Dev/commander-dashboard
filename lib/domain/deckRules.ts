@@ -5,9 +5,11 @@ export type Deck = {
 	commanderAId: string | number;
 	commanderAName?: string;
 	commanderAImageUrl?: string;
+	commanderAColors?: string[];
 	commanderBId?: string | number;
 	commanderBName?: string;
 	commanderBImageUrl?: string;
+	commanderBColors?: string[];
 };
 
 export type CommanderId = string | number;
@@ -22,8 +24,10 @@ export function createDeck(
 	options?: {
 		commanderAName?: string;
 		commanderAImageUrl?: string;
+		commanderAColors?: string[];
 		commanderBName?: string;
 		commanderBImageUrl?: string;
+		commanderBColors?: string[];
 	}
 ): Deck {
 	const trimmedName = name.trim();
@@ -42,9 +46,11 @@ export function createDeck(
 		commanderAId,
 		commanderAName: options?.commanderAName,
 		commanderAImageUrl: options?.commanderAImageUrl,
+		commanderAColors: options?.commanderAColors,
 		commanderBId,
 		commanderBName: options?.commanderBName,
 		commanderBImageUrl: options?.commanderBImageUrl,
+		commanderBColors: options?.commanderBColors,
 	};
 }
 

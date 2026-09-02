@@ -5,7 +5,10 @@
     "playerId": 1,
     "commanderAId": "c62990d7-a337-4fc3-859c-63bc1dade1b9",
     "commanderAName": "Zurzoth, Chaos Rider",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/c/6/c62990d7-a337-4fc3-859c-63bc1dade1b9.jpg?1783923255"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/c/6/c62990d7-a337-4fc3-859c-63bc1dade1b9.jpg?1783923255",
+    "commanderAColors": [
+      "R"
+    ]
   },
   {
     "id": 3,
@@ -13,7 +16,11 @@
     "playerId": 1,
     "commanderAId": "4dc2d415-fdf7-4f2d-95d0-a793ffc26491",
     "commanderAName": "Rendmaw, Creaking Nest",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/d/4dc2d415-fdf7-4f2d-95d0-a793ffc26491.jpg?1783909662"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/d/4dc2d415-fdf7-4f2d-95d0-a793ffc26491.jpg?1783909662",
+    "commanderAColors": [
+      "B",
+      "G"
+    ]
   },
   {
     "id": 5,
@@ -21,7 +28,11 @@
     "playerId": 1,
     "commanderAId": "fe3e7dd2-b66d-4218-9fde-f84bec26b7bf",
     "commanderAName": "Ruby, Daring Tracker",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/f/e/fe3e7dd2-b66d-4218-9fde-f84bec26b7bf.jpg?1783909051"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/f/e/fe3e7dd2-b66d-4218-9fde-f84bec26b7bf.jpg?1783909051",
+    "commanderAColors": [
+      "G",
+      "R"
+    ]
   },
   {
     "id": 10,
@@ -37,7 +48,12 @@
     "playerId": 2,
     "commanderAId": "70b6670f-a9fa-4d75-b0a7-c01b5071a514",
     "commanderAName": "Toph, the First Metalbender",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/7/0/70b6670f-a9fa-4d75-b0a7-c01b5071a514.jpg?1783904920"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/7/0/70b6670f-a9fa-4d75-b0a7-c01b5071a514.jpg?1783904920",
+    "commanderAColors": [
+      "G",
+      "R",
+      "W"
+    ]
   },
   {
     "id": 12,
@@ -45,7 +61,10 @@
     "playerId": 3,
     "commanderAId": "6165eb73-49a8-4337-aa5d-7d9d48b916c9",
     "commanderAName": "Elanor Gardner",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/6/1/6165eb73-49a8-4337-aa5d-7d9d48b916c9.jpg?1783916222"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/6/1/6165eb73-49a8-4337-aa5d-7d9d48b916c9.jpg?1783916222",
+    "commanderAColors": [
+      "G"
+    ]
   },
   {
     "id": 13,
@@ -53,7 +72,11 @@
     "playerId": 2,
     "commanderAId": "bf708169-a307-494b-b8d8-baae53b2e2f2",
     "commanderAName": "Abigale, Eloquent First-Year",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1783904418"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1783904418",
+    "commanderAColors": [
+      "B",
+      "W"
+    ]
   },
   {
     "id": 14,
@@ -61,7 +84,11 @@
     "playerId": 6,
     "commanderAId": "bf708169-a307-494b-b8d8-baae53b2e2f2",
     "commanderAName": "Abigale, Eloquent First-Year",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1783904418"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1783904418",
+    "commanderAColors": [
+      "B",
+      "W"
+    ]
   },
   {
     "id": 15,
@@ -69,7 +96,12 @@
     "playerId": 5,
     "commanderAId": "9a2e4252-9fbc-4d43-8935-db2cafaa7b5f",
     "commanderAName": "Auntie Ool, Cursewretch",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/9/a/9a2e4252-9fbc-4d43-8935-db2cafaa7b5f.jpg?1783904606"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/9/a/9a2e4252-9fbc-4d43-8935-db2cafaa7b5f.jpg?1783904606",
+    "commanderAColors": [
+      "B",
+      "G",
+      "R"
+    ]
   },
   {
     "id": 16,
@@ -77,7 +109,12 @@
     "playerId": 3,
     "commanderAId": "a062a004-984e-4b62-960c-af7288f7a3e9",
     "commanderAName": "Isshin, Two Heavens as One",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/a/0/a062a004-984e-4b62-960c-af7288f7a3e9.jpg?1783923833"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/a/0/a062a004-984e-4b62-960c-af7288f7a3e9.jpg?1783923833",
+    "commanderAColors": [
+      "B",
+      "R",
+      "W"
+    ]
   },
   {
     "id": 17,
@@ -85,7 +122,11 @@
     "playerId": 1,
     "commanderAId": "eb79f973-2384-4de4-81fb-14ba5a0e5556",
     "commanderAName": "Tadeas, Juniper Ascendant",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/e/b/eb79f973-2384-4de4-81fb-14ba5a0e5556.jpg?1783917774"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/e/b/eb79f973-2384-4de4-81fb-14ba5a0e5556.jpg?1783917774",
+    "commanderAColors": [
+      "G",
+      "W"
+    ]
   },
   {
     "id": 18,
@@ -93,7 +134,12 @@
     "playerId": 6,
     "commanderAId": "a934590b-5c70-4f07-af67-fbe817a99531",
     "commanderAName": "Miirym, Sentinel Wyrm",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/a/9/a934590b-5c70-4f07-af67-fbe817a99531.jpg?1783922689"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/a/9/a934590b-5c70-4f07-af67-fbe817a99531.jpg?1783922689",
+    "commanderAColors": [
+      "G",
+      "R",
+      "U"
+    ]
   },
   {
     "id": 19,
@@ -101,7 +147,14 @@
     "playerId": 3,
     "commanderAId": "e4b1aa1e-b4e3-4346-8937-76b312501c70",
     "commanderAName": "Jodah, the Unifier",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/e/4/e4b1aa1e-b4e3-4346-8937-76b312501c70.jpg?1783921283"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/e/4/e4b1aa1e-b4e3-4346-8937-76b312501c70.jpg?1783921283",
+    "commanderAColors": [
+      "B",
+      "G",
+      "R",
+      "U",
+      "W"
+    ]
   },
   {
     "id": 20,
@@ -109,7 +162,11 @@
     "playerId": 5,
     "commanderAId": "214a695b-208e-4fd5-9ceb-23c882eadcf7",
     "commanderAName": "Shadrix Silverquill",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/2/1/214a695b-208e-4fd5-9ceb-23c882eadcf7.jpg?1783903745"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/2/1/214a695b-208e-4fd5-9ceb-23c882eadcf7.jpg?1783903745",
+    "commanderAColors": [
+      "B",
+      "W"
+    ]
   },
   {
     "id": 21,
@@ -117,7 +174,12 @@
     "playerId": 2,
     "commanderAId": "41e58eb8-e5b9-4ef6-be1f-00e28cebb998",
     "commanderAName": "Flubs, the Fool",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/1/41e58eb8-e5b9-4ef6-be1f-00e28cebb998.jpg?1783910621"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/1/41e58eb8-e5b9-4ef6-be1f-00e28cebb998.jpg?1783910621",
+    "commanderAColors": [
+      "G",
+      "R",
+      "U"
+    ]
   },
   {
     "id": 22,
@@ -125,7 +187,11 @@
     "playerId": 3,
     "commanderAId": "36356522-15fc-41e2-bf14-a745e5a96a50",
     "commanderAName": "Arcade Gannon",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/3/6/36356522-15fc-41e2-bf14-a745e5a96a50.jpg?1783912393"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/3/6/36356522-15fc-41e2-bf14-a745e5a96a50.jpg?1783912393",
+    "commanderAColors": [
+      "U",
+      "W"
+    ]
   },
   {
     "id": 23,
@@ -133,7 +199,11 @@
     "playerId": 2,
     "commanderAId": "fbdb68cc-5516-481a-94c5-59f6c69b8a17",
     "commanderAName": "Hope Estheim",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/f/b/fbdb68cc-5516-481a-94c5-59f6c69b8a17.jpg?1783906569"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/f/b/fbdb68cc-5516-481a-94c5-59f6c69b8a17.jpg?1783906569",
+    "commanderAColors": [
+      "U",
+      "W"
+    ]
   },
   {
     "id": 24,
@@ -141,7 +211,11 @@
     "playerId": 1,
     "commanderAId": "afdab464-3674-449b-be01-1cbd21fced23",
     "commanderAName": "Kraven the Hunter",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/a/f/afdab464-3674-449b-be01-1cbd21fced23.jpg?1783905315"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/a/f/afdab464-3674-449b-be01-1cbd21fced23.jpg?1783905315",
+    "commanderAColors": [
+      "B",
+      "G"
+    ]
   },
   {
     "id": 25,
@@ -149,7 +223,12 @@
     "playerId": 6,
     "commanderAId": "6487ccbf-f6cd-45a6-8514-2c458b655ef2",
     "commanderAName": "Saruman, the White Hand",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/6/4/6487ccbf-f6cd-45a6-8514-2c458b655ef2.jpg?1783916037"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/6/4/6487ccbf-f6cd-45a6-8514-2c458b655ef2.jpg?1783916037",
+    "commanderAColors": [
+      "B",
+      "R",
+      "U"
+    ]
   },
   {
     "id": 26,
@@ -157,7 +236,11 @@
     "playerId": 3,
     "commanderAId": "721cd840-5f2e-40b7-8b33-ea2d6343d390",
     "commanderAName": "Aron, Benalia's Ruin",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/7/2/721cd840-5f2e-40b7-8b33-ea2d6343d390.jpg?1783907033"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/7/2/721cd840-5f2e-40b7-8b33-ea2d6343d390.jpg?1783907033",
+    "commanderAColors": [
+      "B",
+      "W"
+    ]
   },
   {
     "id": 27,
@@ -165,7 +248,10 @@
     "playerId": 5,
     "commanderAId": "5924c01f-2815-4e37-b700-3ba6cc81e0e4",
     "commanderAName": "Ashling, the Limitless",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/5/9/5924c01f-2815-4e37-b700-3ba6cc81e0e4.jpg?1783904607"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/5/9/5924c01f-2815-4e37-b700-3ba6cc81e0e4.jpg?1783904607",
+    "commanderAColors": [
+      "R"
+    ]
   },
   {
     "id": 29,
@@ -176,7 +262,13 @@
     "commanderAImageUrl": "https://cards.scryfall.io/normal/front/b/6/b6a7d041-957a-4b19-9517-214689dadd45.jpg?1783922714",
     "commanderBId": "c876f9b3-b4f6-4177-9c43-443ae2a028d0",
     "commanderBName": "Scion of Halaster",
-    "commanderBImageUrl": "https://cards.scryfall.io/normal/front/c/8/c876f9b3-b4f6-4177-9c43-443ae2a028d0.jpg?1783922752"
+    "commanderBImageUrl": "https://cards.scryfall.io/normal/front/c/8/c876f9b3-b4f6-4177-9c43-443ae2a028d0.jpg?1783922752",
+    "commanderAColors": [
+      "G"
+    ],
+    "commanderBColors": [
+      "B"
+    ]
   },
   {
     "id": 30,
@@ -184,7 +276,11 @@
     "playerId": 6,
     "commanderAId": "969ac7dd-f3aa-4888-9ff0-d16a31b5e7a9",
     "commanderAName": "Shorikai, Genesis Engine",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/9/6/969ac7dd-f3aa-4888-9ff0-d16a31b5e7a9.jpg?1783923999"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/9/6/969ac7dd-f3aa-4888-9ff0-d16a31b5e7a9.jpg?1783923999",
+    "commanderAColors": [
+      "U",
+      "W"
+    ]
   },
   {
     "id": 31,
@@ -200,7 +296,12 @@
     "playerId": 5,
     "commanderAId": "e0ad8e7f-cda0-4529-94fc-dd3709158a94",
     "commanderAName": "Doran, the Siege Tower",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/e/0/e0ad8e7f-cda0-4529-94fc-dd3709158a94.jpg?1783921840"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/e/0/e0ad8e7f-cda0-4529-94fc-dd3709158a94.jpg?1783921840",
+    "commanderAColors": [
+      "B",
+      "G",
+      "W"
+    ]
   },
   {
     "id": 33,
@@ -219,6 +320,10 @@
     "commanderAImageUrl": "https://cards.scryfall.io/normal/front/7/a/7a51472c-b61f-4d31-8753-a9ec90d12889.jpg?1783914620",
     "commanderBId": "9a1ee042-6713-4e9e-9901-9b94d99d33f1",
     "commanderBName": "Clara Oswald",
-    "commanderBImageUrl": "https://cards.scryfall.io/normal/front/9/a/9a1ee042-6713-4e9e-9901-9b94d99d33f1.jpg?1783914685"
+    "commanderBImageUrl": "https://cards.scryfall.io/normal/front/9/a/9a1ee042-6713-4e9e-9901-9b94d99d33f1.jpg?1783914685",
+    "commanderAColors": [
+      "R",
+      "W"
+    ]
   }
 ]
