@@ -30,6 +30,12 @@ export function useAuth(): AuthState {
 		}
 
 		const data = await res.json();
+
+		if (!data.authenticated) {
+			setState({ status: "unauthenticated" });
+			return;
+		}
+
 		setState({ status: "authenticated", email: data.email });
 	}
 
