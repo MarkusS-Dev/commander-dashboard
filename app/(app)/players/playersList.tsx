@@ -168,7 +168,7 @@ export default function PlayersList() {
 				<div>
 					<button
 						onClick={openCreatePopup}
-						className="w-full border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+						className="rounded-2xl w-full border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
 					>
 						Create new player
 					</button>
@@ -205,7 +205,7 @@ export default function PlayersList() {
 
 			{isEditor && createOpen && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-					<div className="w-full max-w-md border border-neutral-200 bg-white shadow-2xl">
+					<div className="w-full max-w-md rounded-2xl border border-neutral-200 bg-white shadow-2xl">
 						<div className="border-b border-neutral-200 px-6 py-4">
 							<div className="text-lg font-semibold text-neutral-900">Create new player</div>
 						</div>
@@ -217,7 +217,7 @@ export default function PlayersList() {
 									value={newName}
 									onChange={e => setNewName(e.target.value)}
 									placeholder="Player name"
-									className="w-full border border-neutral-300 px-3 py-2 text-sm"
+									className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 								/>
 							</div>
 
@@ -239,13 +239,13 @@ export default function PlayersList() {
 								<button
 									onClick={addPlayer}
 									disabled={addingPlayer || !newName.trim()}
-									className="flex-1 border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
+									className="rounded-2xl flex-1 border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
 								>
 									Create
 								</button>
 								<button
 									onClick={closeCreatePopup}
-									className="border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+									className="rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
 								>
 									Cancel
 								</button>
@@ -257,13 +257,13 @@ export default function PlayersList() {
 
 			{isEditor && editingPlayerId != null && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-					<div className="w-full max-w-md border border-neutral-200 bg-white shadow-2xl">
+					<div className="w-full max-w-md rounded-2xl border border-neutral-200 bg-white shadow-2xl">
 						<div className="flex items-center justify-between border-b border-neutral-200 px-6 py-4 gap-3">
 							<div className="text-lg font-semibold text-neutral-900">Edit player</div>
 							<button
 								onClick={deletePlayer}
 								disabled={savingPlayer || deletingPlayer}
-								className="whitespace-nowrap border border-red-300 px-3 py-2 text-sm text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:border-red-200 disabled:text-red-300 disabled:hover:bg-white"
+								className="rounded-2xl whitespace-nowrap border border-red-300 px-3 py-2 text-sm text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:border-red-200 disabled:text-red-300 disabled:hover:bg-white"
 							>
 								Delete
 							</button>
@@ -276,7 +276,7 @@ export default function PlayersList() {
 									value={editName}
 									onChange={e => setEditName(e.target.value)}
 									placeholder="Player name"
-									className="w-full border border-neutral-300 px-3 py-2 text-sm"
+									className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 								/>
 							</div>
 
@@ -298,7 +298,7 @@ export default function PlayersList() {
 								<button
 									onClick={savePlayerChanges}
 									disabled={savingPlayer || deletingPlayer || !editName.trim()}
-									className="flex-1 border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
+									className="rounded-2xl flex-1 border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
 								>
 									Save
 								</button>
@@ -306,7 +306,7 @@ export default function PlayersList() {
 								<button
 									onClick={closeEditPopup}
 									disabled={savingPlayer || deletingPlayer}
-									className="border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
+									className="rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
 								>
 									Cancel
 								</button>

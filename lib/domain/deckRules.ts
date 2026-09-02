@@ -3,7 +3,11 @@ export type Deck = {
 	name: string;
 	playerId: number;
 	commanderAId: string | number;
+	commanderAName?: string;
+	commanderAImageUrl?: string;
 	commanderBId?: string | number;
+	commanderBName?: string;
+	commanderBImageUrl?: string;
 };
 
 export type CommanderId = string | number;
@@ -14,7 +18,13 @@ export function createDeck(
 	name: string,
 	playerId: number,
 	commanderAId: CommanderId,
-	commanderBId?: CommanderId
+	commanderBId?: CommanderId,
+	options?: {
+		commanderAName?: string;
+		commanderAImageUrl?: string;
+		commanderBName?: string;
+		commanderBImageUrl?: string;
+	}
 ): Deck {
 	const trimmedName = name.trim();
 	if (!trimmedName)
@@ -30,7 +40,11 @@ export function createDeck(
 		name: trimmedName,
 		playerId,
 		commanderAId,
-		commanderBId
+		commanderAName: options?.commanderAName,
+		commanderAImageUrl: options?.commanderAImageUrl,
+		commanderBId,
+		commanderBName: options?.commanderBName,
+		commanderBImageUrl: options?.commanderBImageUrl,
 	};
 }
 

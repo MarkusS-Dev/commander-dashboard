@@ -59,7 +59,7 @@ export default function AuthModal({
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-			<div className="w-full max-w-sm space-y-4 bg-white p-6 shadow-lg">
+			<div className="w-full max-w-sm space-y-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-lg">
 				<h2 className="text-lg font-medium">
 					{step === "email" ? "Sign in" : "Enter code"}
 				</h2>
@@ -71,12 +71,12 @@ export default function AuthModal({
 							value={email}
 							onChange={e => setEmail(e.target.value)}
 							placeholder="you@email.com"
-							className="w-full border border-neutral-300 px-3 py-2 text-sm"
+							className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 						/>
 						<button
 							onClick={requestCode}
 							disabled={loading}
-							className="w-full border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+							className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
 						>
 							Send code
 						</button>
@@ -89,12 +89,12 @@ export default function AuthModal({
 							value={code}
 							onChange={e => setCode(e.target.value)}
 							placeholder="6-digit code"
-							className="w-full border border-neutral-300 px-3 py-2 text-sm"
+							className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 						/>
 						<button
 							onClick={verifyCode}
 							disabled={loading}
-							className="w-full border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+							className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
 						>
 							Verify
 						</button>

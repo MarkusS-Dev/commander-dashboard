@@ -59,7 +59,7 @@ export default function CommanderSearchField({
 							onSelect(null);
 					}}
 					placeholder="Search by commander name"
-					className="w-full border border-neutral-300 px-3 py-2 text-sm"
+					className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 				/>
 			</div>
 
@@ -70,7 +70,7 @@ export default function CommanderSearchField({
 			)}
 
 			{results.length > 0 && (
-				<ul className="max-h-56 overflow-auto border border-neutral-200 bg-white">
+				<ul className="max-h-56 overflow-auto rounded-2xl border border-neutral-200 bg-white">
 					{results.map(commander => (
 						<li key={commander.id}>
 							<button

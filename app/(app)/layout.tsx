@@ -42,7 +42,7 @@ export default function AppLayout({
 				<Link
 					href={tab.href}
 					className={[
-						"px-4 py-2 text-sm border border-neutral-300 bg-white",
+						"rounded-2xl px-4 py-2 text-sm border border-neutral-300 bg-white",
 						isActive
 							? "font-medium text-neutral-900"
 							: "text-neutral-600 hover:bg-neutral-100",
@@ -98,7 +98,7 @@ function AuthControl() {
 		<>
 			<button
 				onClick={() => setOpen(true)}
-				className="border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 whitespace-nowrap"
+				className="rounded-2xl border border-neutral-300 px-3 py-2 text-sm whitespace-nowrap hover:bg-neutral-100"
 			>
 				Sign in
 			</button>

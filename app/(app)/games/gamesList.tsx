@@ -224,14 +224,14 @@ export default function GamesList() {
 					<button
 						onClick={openLogGame}
 						disabled={logGameLoading}
-						className="w-full border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
+						className="rounded-2xl w-full border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
 					>
 						Log game
 					</button>
 
 					{logGameLoading && (
 						<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-							<div className="flex w-full max-w-sm flex-col items-center gap-3 border border-neutral-200 bg-white px-6 py-10 text-center shadow-2xl">
+							<div className="flex w-full max-w-sm flex-col items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-6 py-10 text-center shadow-2xl">
 								<div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-200 border-t-neutral-900" />
 								<div className="text-sm text-neutral-600">
 									Loading game setup...
@@ -242,7 +242,7 @@ export default function GamesList() {
 
 					{logGameOpen && (
 						<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-							<div className="w-full max-w-lg border border-neutral-200 bg-white shadow-2xl">
+							<div className="w-full max-w-lg rounded-2xl border border-neutral-200 bg-white shadow-2xl">
 								<div className="flex max-h-[85vh] flex-col">
 									<div className="border-b border-neutral-200 px-6 py-4">
 										<div className="text-lg font-semibold text-neutral-900">
@@ -261,7 +261,7 @@ export default function GamesList() {
 											<select
 												value={seatCount}
 												onChange={e => setSeatCount(Number(e.target.value))}
-												className="w-full border border-neutral-300 px-3 py-2 text-sm"
+												className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 											>
 												{[2, 3, 4, 5, 6, 7].map(n => (
 													<option key={n} value={n}>
@@ -277,7 +277,7 @@ export default function GamesList() {
 													key={index}
 													value={deckId}
 													onChange={e => updateSeat(index, e.target.value)}
-													className="w-full border border-neutral-300 px-3 py-2 text-sm"
+													className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 												>
 													<option value="">Seat {index + 1}</option>
 													{decks.map(d => (
@@ -296,7 +296,7 @@ export default function GamesList() {
 											<select
 												value={winnerDeckId}
 												onChange={e => setWinnerDeckId(e.target.value ? Number(e.target.value) : "")}
-												className="w-full border border-neutral-300 px-3 py-2 text-sm"
+												className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 											>
 												<option value="">Select winner</option>
 												{selectedDeckIds.map(id => {
@@ -318,7 +318,7 @@ export default function GamesList() {
 												type="date"
 												value={date}
 												onChange={e => setDate(e.target.value)}
-												className="w-full border border-neutral-300 px-3 py-2 text-sm"
+												className="w-full rounded-2xl border border-neutral-300 px-3 py-2 text-sm"
 											/>
 										</div>
 
@@ -335,14 +335,14 @@ export default function GamesList() {
 											<button
 												onClick={logGame}
 												disabled={!canLogGame()}
-												className="flex-1 border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
+												className="rounded-2xl flex-1 border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-white"
 											>
 												Log game
 											</button>
 
 											<button
 												onClick={closeLogGame}
-												className="border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+												className="rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
 											>
 												Cancel
 											</button>

@@ -5,6 +5,14 @@ type ScryfallCard = {
 	name: string;
 	colors: string[];
 	mana_cost: string | null;
+	image_uris?: {
+		normal?: string;
+	};
+	card_faces?: Array<{
+		image_uris?: {
+			normal?: string;
+		};
+	}>;
 };
 
 type ScryfallList<T> = {
@@ -19,6 +27,7 @@ export type CommanderSummary = {
 	name: string;
 	colors: string[];
 	manaCost: string;
+	imageUrl?: string;
 };
 
 type CommanderCache = {
@@ -33,6 +42,25 @@ const SEARCH_QUERY = "is:commander";
 
 function normalize(text: string) {
 	return text.trim().toLowerCase();
+}
+
+function commanderImageUrl(card: ScryfallCard): string | undefined {
+	return card.image_uris?.normal ?? card.card_faces?.[0]?.image_uris?.normal;
+}
+
+async function fetchCommanderById(id: string): Promise<CommanderSummary | null> {
+	try {
+		const card = await fetchScryfallJson<ScryfallCard>(`https://api.scryfall.com/cards/${id}`);
+		return {
+			id: card.id,
+			name: card.name,
+			colors: card.colors ?? [],
+			manaCost: card.mana_cost ?? "",
+			imageUrl: commanderImageUrl(card),
+		};
+	} catch {
+		return null;
+	}
 }
 
 async function fetchScryfallJson<T>(url: string): Promise<T> {
@@ -62,6 +90,7 @@ async function fetchCommanderCacheFromScryfall(): Promise<CommanderCache> {
 		name: card.name,
 		colors: card.colors ?? [],
 		manaCost: card.mana_cost ?? "",
+		imageUrl: commanderImageUrl(card),
 	}));
 
 	let nextPage = firstPage.next_page;
@@ -74,6 +103,7 @@ async function fetchCommanderCacheFromScryfall(): Promise<CommanderCache> {
 				name: card.name,
 				colors: card.colors ?? [],
 				manaCost: card.mana_cost ?? "",
+				imageUrl: commanderImageUrl(card),
 			}))
 		);
 		nextPage = page.next_page;
@@ -102,11 +132,12 @@ async function saveCommanderCache(cache: CommanderCache) {
 async function getCommanderCache(): Promise<CommanderCache> {
 	const cache = await loadCommanderCache();
 	const searchUrl = `${SEARCH_URL}?q=${encodeURIComponent(SEARCH_QUERY)}&unique=cards&order=name&dir=asc&page=1`;
+	const cacheNeedsImageBackfill = Boolean(cache?.commanders.some(commander => !commander.imageUrl));
 
 	try {
 		const latest = await fetchCommanderPage(searchUrl);
 
-		if (!cache || cache.totalCards !== latest.total_cards) {
+		if (!cache || cache.totalCards !== latest.total_cards || cacheNeedsImageBackfill) {
 			const refreshed = await fetchCommanderCacheFromScryfall();
 			await saveCommanderCache(refreshed);
 			return refreshed;
@@ -155,7 +186,19 @@ export async function resolveCommandersById(
 
 		const direct = commandersById.get(id);
 		if (direct) {
-			resolved.push(direct);
+			if (direct.imageUrl) {
+				resolved.push(direct);
+				continue;
+			}
+
+			const hydrated = await fetchCommanderById(id);
+			resolved.push(hydrated ?? direct);
+			continue;
+		}
+
+		const hydrated = await fetchCommanderById(id);
+		if (hydrated) {
+			resolved.push(hydrated);
 		}
 	}
 
