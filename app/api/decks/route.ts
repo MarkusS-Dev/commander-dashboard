@@ -2,6 +2,7 @@ import { loadDecks, saveDecks } from "@/lib/github/deckRepository";
 import { loadPlayers } from "@/lib/github/playerRepository";
 import { resolveCommandersById } from "@/lib/github/commanderIndexRepository";
 import { createDeck } from "@/lib/domain/deckRules";
+import { requiresCommanderColorChoice } from "@/lib/domain/specialCommanderColorChoices";
 import { requireEditorSession } from "@/lib/auth/session";
 
 async function resolveCommandersSafe(ids: Array<string | number>) {
@@ -10,6 +11,19 @@ async function resolveCommandersSafe(ids: Array<string | number>) {
 	} catch {
 		return [];
 	}
+}
+
+function normalizeColors(value: unknown): string[] | undefined {
+	if (!Array.isArray(value))
+		return undefined;
+
+	const colors = value
+		.filter((color): color is string => typeof color === "string")
+		.map(color => color.trim())
+		.filter(Boolean)
+		.filter(color => ["W", "U", "B", "R", "G"].includes(color));
+
+	return colors.length > 0 ? colors : undefined;
 }
 
 export async function GET() {
@@ -26,9 +40,11 @@ export async function POST(req: Request) {
 		commanderAId,
 		commanderAName,
 		commanderAImageUrl,
+		commanderAColors,
 		commanderBId,
 		commanderBName,
 		commanderBImageUrl,
+		commanderBColors,
 	} = await req.json();
 
 	const players = await loadPlayers();
@@ -43,6 +59,24 @@ export async function POST(req: Request) {
 	const resolvedById = new Map(resolved.map(commander => [commander.id, commander]));
 	const resolvedA = resolvedById.get(String(commanderAId));
 	const resolvedB = commanderBId != null ? resolvedById.get(String(commanderBId)) : undefined;
+	const chosenAColors = normalizeColors(commanderAColors);
+	const chosenBColors = normalizeColors(commanderBColors);
+	const effectiveAColors = resolvedA?.colors.length
+		? resolvedA.colors
+		: requiresCommanderColorChoice(commanderAId)
+			? chosenAColors
+			: resolvedA?.colors;
+	const effectiveBColors = commanderBId != null && resolvedB?.colors.length
+		? resolvedB.colors
+		: commanderBId != null && requiresCommanderColorChoice(commanderBId)
+			? chosenBColors
+			: resolvedB?.colors;
+
+	if (requiresCommanderColorChoice(commanderAId) && (!effectiveAColors || effectiveAColors.length === 0))
+		return new Response("A color choice is required for this commander", { status: 400 });
+
+	if (commanderBId != null && requiresCommanderColorChoice(commanderBId) && (!effectiveBColors || effectiveBColors.length === 0))
+		return new Response("A color choice is required for this commander", { status: 400 });
 
 	const decks = await loadDecks();
 	const deck = createDeck(
@@ -54,10 +88,10 @@ export async function POST(req: Request) {
 		{
 			commanderAName: resolvedA?.name ?? (typeof commanderAName === "string" ? commanderAName : undefined),
 			commanderAImageUrl: resolvedA?.imageUrl ?? (typeof commanderAImageUrl === "string" ? commanderAImageUrl : undefined),
-			commanderAColors: resolvedA?.colors,
+			commanderAColors: effectiveAColors,
 			commanderBName: resolvedB?.name ?? (typeof commanderBName === "string" ? commanderBName : undefined),
 			commanderBImageUrl: resolvedB?.imageUrl ?? (typeof commanderBImageUrl === "string" ? commanderBImageUrl : undefined),
-			commanderBColors: resolvedB?.colors,
+			commanderBColors: effectiveBColors,
 		}
 	);
 
@@ -97,9 +131,11 @@ export async function PUT(req: Request) {
 		commanderAId,
 		commanderAName,
 		commanderAImageUrl,
+		commanderAColors,
 		commanderBId,
 		commanderBName,
 		commanderBImageUrl,
+		commanderBColors,
 	} = await req.json();
 
 	if (typeof id !== "number")
@@ -132,6 +168,8 @@ export async function PUT(req: Request) {
 	const resolvedById = new Map(resolved.map(commander => [commander.id, commander]));
 	const resolvedA = resolvedById.get(String(commanderAId));
 	const resolvedB = commanderBId != null ? resolvedById.get(String(commanderBId)) : undefined;
+	const chosenAColors = normalizeColors(commanderAColors);
+	const chosenBColors = normalizeColors(commanderBColors);
 
 	const decks = await loadDecks();
 	const index = decks.findIndex(deck => deck.id === id);
@@ -145,14 +183,22 @@ export async function PUT(req: Request) {
 		commanderAId,
 		commanderAName: resolvedA?.name ?? (typeof commanderAName === "string" ? commanderAName : undefined),
 		commanderAImageUrl: resolvedA?.imageUrl ?? (typeof commanderAImageUrl === "string" ? commanderAImageUrl : undefined),
-		commanderAColors: resolvedA?.colors ?? decks[index].commanderAColors,
+		commanderAColors: resolvedA?.colors.length
+			? resolvedA.colors
+			: requiresCommanderColorChoice(commanderAId)
+				? (chosenAColors ?? decks[index].commanderAColors)
+				: decks[index].commanderAColors,
 		commanderBId:
 			(commanderBId == null || (typeof commanderBId === "string" && commanderBId.trim() === ""))
 				? undefined
 				: commanderBId,
 		commanderBName: resolvedB?.name ?? (typeof commanderBName === "string" ? commanderBName : undefined),
 		commanderBImageUrl: resolvedB?.imageUrl ?? (typeof commanderBImageUrl === "string" ? commanderBImageUrl : undefined),
-		commanderBColors: resolvedB?.colors ?? decks[index].commanderBColors,
+		commanderBColors: resolvedB?.colors.length
+			? resolvedB.colors
+			: commanderBId != null && requiresCommanderColorChoice(commanderBId)
+				? (chosenBColors ?? decks[index].commanderBColors)
+				: decks[index].commanderBColors,
 	};
 
 	await saveDecks(decks);

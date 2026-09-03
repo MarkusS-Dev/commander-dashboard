@@ -5,6 +5,7 @@ import { useEditor } from "@/lib/auth/useEditor";
 import ReadOnlyBanner from "@/components/ReadOnlyBanner";
 import CommanderSearchField from "@/components/CommanderSearchField";
 import type { CommanderSummary } from "@/lib/github/commanderIndexRepository";
+import { requiresCommanderColorChoice } from "@/lib/domain/specialCommanderColorChoices";
 
 type Player = {
 	id: number;
@@ -18,10 +19,30 @@ type Deck = {
 	commanderAId: string | number;
 	commanderAName?: string;
 	commanderAImageUrl?: string;
+	commanderAColors?: string[];
 	commanderBId?: string | number;
 	commanderBName?: string;
 	commanderBImageUrl?: string;
+	commanderBColors?: string[];
 };
+
+type CommanderSlot = "A" | "B";
+
+type DeckMode = "create" | "edit";
+
+type ColorChoiceState = {
+	mode: DeckMode;
+	slot: CommanderSlot;
+	commanderName: string;
+} | null;
+
+const COLOR_OPTIONS = [
+	{ label: "White", value: "W" },
+	{ label: "Blue", value: "U" },
+	{ label: "Black", value: "B" },
+	{ label: "Red", value: "R" },
+	{ label: "Green", value: "G" },
+];
 
 const COLOR_ORDER = ["White", "Blue", "Black", "Red", "Green"];
 
@@ -85,9 +106,11 @@ export default function DecksList() {
 	const [commanderAId, setCommanderAId] = useState("");
 	const [commanderAName, setCommanderAName] = useState("");
 	const [commanderAImageUrl, setCommanderAImageUrl] = useState("");
+	const [commanderAColors, setCommanderAColors] = useState<string[]>([]);
 	const [commanderBId, setCommanderBId] = useState("");
 	const [commanderBName, setCommanderBName] = useState("");
 	const [commanderBImageUrl, setCommanderBImageUrl] = useState("");
+	const [commanderBColors, setCommanderBColors] = useState<string[]>([]);
 	const [error, setError] = useState<string | null>(null);
 	const [editingDeckId, setEditingDeckId] = useState<number | null>(null);
 	const [editName, setEditName] = useState("");
@@ -95,10 +118,13 @@ export default function DecksList() {
 	const [editCommanderAId, setEditCommanderAId] = useState("");
 	const [editCommanderAName, setEditCommanderAName] = useState("");
 	const [editCommanderAImageUrl, setEditCommanderAImageUrl] = useState("");
+	const [editCommanderAColors, setEditCommanderAColors] = useState<string[]>([]);
 	const [editCommanderBId, setEditCommanderBId] = useState("");
 	const [editCommanderBName, setEditCommanderBName] = useState("");
 	const [editCommanderBImageUrl, setEditCommanderBImageUrl] = useState("");
+	const [editCommanderBColors, setEditCommanderBColors] = useState<string[]>([]);
 	const [editError, setEditError] = useState<string | null>(null);
+	const [colorChoice, setColorChoice] = useState<ColorChoiceState>(null);
 
 	const { isEditor } = useEditor();
 
@@ -174,6 +200,100 @@ export default function DecksList() {
 		return players.find(p => p.id === id)?.name ?? "Unknown";
 	}
 
+	function commanderColors(deck: Deck, commander: CommanderSummary | null, slot: CommanderSlot) {
+		const savedColors = slot === "A" ? deck.commanderAColors : deck.commanderBColors;
+		return savedColors ?? commander?.colors ?? [];
+	}
+
+	function setCommanderColors(mode: DeckMode, slot: CommanderSlot, colors: string[]) {
+		if (mode === "create") {
+			if (slot === "A") setCommanderAColors(colors);
+			else setCommanderBColors(colors);
+			return;
+		}
+
+		if (slot === "A") setEditCommanderAColors(colors);
+		else setEditCommanderBColors(colors);
+	}
+
+	function clearCommanderSelection(mode: DeckMode, slot: CommanderSlot) {
+		if (mode === "create") {
+			if (slot === "A") {
+				setCommanderAId("");
+				setCommanderAName("");
+				setCommanderAImageUrl("");
+				setCommanderAColors([]);
+			} else {
+				setCommanderBId("");
+				setCommanderBName("");
+				setCommanderBImageUrl("");
+				setCommanderBColors([]);
+			}
+			return;
+		}
+
+		if (slot === "A") {
+			setEditCommanderAId("");
+			setEditCommanderAName("");
+			setEditCommanderAImageUrl("");
+			setEditCommanderAColors([]);
+		} else {
+			setEditCommanderBId("");
+			setEditCommanderBName("");
+			setEditCommanderBImageUrl("");
+			setEditCommanderBColors([]);
+		}
+	}
+
+	function handleCommanderSelect(mode: DeckMode, slot: CommanderSlot, commander: CommanderSummary | null) {
+		const isSpecial = commander != null && requiresCommanderColorChoice(commander.id);
+		const colors = commander?.colors ?? [];
+
+		if (mode === "create") {
+			if (slot === "A") {
+				setCommanderAId(commander?.id ?? "");
+				setCommanderAName(commander?.name ?? "");
+				setCommanderAImageUrl(commander?.imageUrl ?? "");
+				setCommanderAColors(isSpecial ? [] : colors);
+				if (commander?.id === commanderBId) {
+					setCommanderBId("");
+					setCommanderBName("");
+					setCommanderBImageUrl("");
+					setCommanderBColors([]);
+				}
+			} else {
+				setCommanderBId(commander?.id ?? "");
+				setCommanderBName(commander?.name ?? "");
+				setCommanderBImageUrl(commander?.imageUrl ?? "");
+				setCommanderBColors(isSpecial ? [] : colors);
+			}
+		} else {
+			if (slot === "A") {
+				setEditCommanderAId(commander?.id ?? "");
+				setEditCommanderAName(commander?.name ?? "");
+				setEditCommanderAImageUrl(commander?.imageUrl ?? "");
+				setEditCommanderAColors(isSpecial ? [] : colors);
+				if (commander?.id === editCommanderBId) {
+					setEditCommanderBId("");
+					setEditCommanderBName("");
+					setEditCommanderBImageUrl("");
+					setEditCommanderBColors([]);
+				}
+			} else {
+				setEditCommanderBId(commander?.id ?? "");
+				setEditCommanderBName(commander?.name ?? "");
+				setEditCommanderBImageUrl(commander?.imageUrl ?? "");
+				setEditCommanderBColors(isSpecial ? [] : colors);
+			}
+		}
+
+		if (isSpecial && commander) {
+			setColorChoice({ mode, slot, commanderName: commander.name });
+		} else if (colorChoice?.mode === mode && colorChoice.slot === slot) {
+			setColorChoice(null);
+		}
+	}
+
 	function commandersByDeck(deck: Deck) {
 		const a = commanders.find(c => c.id === String(deck.commanderAId));
 		const b =
@@ -198,11 +318,29 @@ export default function DecksList() {
 	}
 
 	function canAddDeck() {
-		return Boolean(name.trim() && playerId !== "" && commanderAId !== "");
+		if (!name.trim() || playerId === "" || commanderAId === "")
+			return false;
+
+		if (requiresCommanderColorChoice(commanderAId) && commanderAColors.length === 0)
+			return false;
+
+		if (commanderBId && requiresCommanderColorChoice(commanderBId) && commanderBColors.length === 0)
+			return false;
+
+		return true;
 	}
 
 	function canSaveEditedDeck() {
-		return Boolean(editName.trim() && editPlayerId !== "" && editCommanderAId !== "" && editingDeckId !== null);
+		if (!editName.trim() || editPlayerId === "" || editCommanderAId === "" || editingDeckId === null)
+			return false;
+
+		if (requiresCommanderColorChoice(editCommanderAId) && editCommanderAColors.length === 0)
+			return false;
+
+		if (editCommanderBId && requiresCommanderColorChoice(editCommanderBId) && editCommanderBColors.length === 0)
+			return false;
+
+		return true;
 	}
 
 	async function addDeck() {
@@ -230,9 +368,11 @@ export default function DecksList() {
 				commanderAId,
 				commanderAName,
 				commanderAImageUrl,
+				commanderAColors,
 				commanderBId: commanderBId === "" ? undefined : commanderBId,
 				commanderBName: commanderBName || undefined,
 				commanderBImageUrl: commanderBImageUrl || undefined,
+				commanderBColors,
 			}),
 		});
 
@@ -246,9 +386,11 @@ export default function DecksList() {
 		setCommanderAId("");
 		setCommanderAName("");
 		setCommanderAImageUrl("");
+		setCommanderAColors([]);
 		setCommanderBId("");
 		setCommanderBName("");
 		setCommanderBImageUrl("");
+		setCommanderBColors([]);
 		await loadAll();
 		closeCreateDeck();
 	}
@@ -282,9 +424,11 @@ export default function DecksList() {
 		setEditCommanderAId(String(deck.commanderAId));
 		setEditCommanderAName(deck.commanderAName ?? "");
 		setEditCommanderAImageUrl(deck.commanderAImageUrl ?? "");
+		setEditCommanderAColors(deck.commanderAColors ?? []);
 		setEditCommanderBId(deck.commanderBId != null ? String(deck.commanderBId) : "");
 		setEditCommanderBName(deck.commanderBName ?? "");
 		setEditCommanderBImageUrl(deck.commanderBImageUrl ?? "");
+		setEditCommanderBColors(deck.commanderBColors ?? []);
 		setEditError(null);
 		setEditDeckOpen(true);
 	}
@@ -321,9 +465,11 @@ export default function DecksList() {
 				commanderAId: editCommanderAId,
 				commanderAName: editCommanderAName,
 				commanderAImageUrl: editCommanderAImageUrl,
+				commanderAColors: editCommanderAColors,
 				commanderBId: editCommanderBId === "" ? undefined : editCommanderBId,
 				commanderBName: editCommanderBName || undefined,
 				commanderBImageUrl: editCommanderBImageUrl || undefined,
+				commanderBColors: editCommanderBColors,
 			}),
 		});
 
@@ -402,16 +548,7 @@ export default function DecksList() {
 											selectedId={commanderAId}
 											selectedName={commanderAName}
 											commanders={commanders}
-											onSelect={commander => {
-												setCommanderAId(commander?.id ?? "");
-												setCommanderAName(commander?.name ?? "");
-												setCommanderAImageUrl(commander?.imageUrl ?? "");
-												if (commander?.id === commanderBId) {
-													setCommanderBId("");
-													setCommanderBName("");
-													setCommanderBImageUrl("");
-												}
-											}}
+											onSelect={commander => handleCommanderSelect("create", "A", commander)}
 										/>
 
 										<CommanderSearchField
@@ -420,12 +557,44 @@ export default function DecksList() {
 											selectedName={commanderBName}
 											commanders={commanders}
 											excludedIds={commanderAId ? [commanderAId] : []}
-											onSelect={commander => {
-												setCommanderBId(commander?.id ?? "");
-												setCommanderBName(commander?.name ?? "");
-												setCommanderBImageUrl(commander?.imageUrl ?? "");
-											}}
+											onSelect={commander => handleCommanderSelect("create", "B", commander)}
 										/>
+
+										{colorChoice?.mode === "create" && (
+											<div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+												<div className="w-full max-w-sm rounded-2xl border border-neutral-200 bg-white p-6 shadow-2xl">
+													<div className="text-lg font-semibold text-neutral-900">Choose a color</div>
+													<p className="mt-1 text-sm text-neutral-600">
+														{colorChoice.commanderName} needs a chosen color.
+													</p>
+													<div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
+														{COLOR_OPTIONS.map(option => (
+															<button
+																key={option.value}
+																type="button"
+																onClick={() => {
+																	setCommanderColors("create", colorChoice.slot, [option.value]);
+																	setColorChoice(null);
+																}}
+																className="rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+															>
+																{option.label}
+															</button>
+														))}
+													</div>
+													<button
+														type="button"
+														onClick={() => {
+															clearCommanderSelection("create", colorChoice.slot);
+															setColorChoice(null);
+														}}
+														className="mt-4 rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+													>
+														Cancel
+													</button>
+												</div>
+											</div>
+										)}
 									</div>
 
 									<div className="border-t border-neutral-200 px-6 py-4">
@@ -499,16 +668,7 @@ export default function DecksList() {
 											selectedId={editCommanderAId}
 											selectedName={editCommanderAName}
 											commanders={commanders}
-											onSelect={commander => {
-												setEditCommanderAId(commander?.id ?? "");
-												setEditCommanderAName(commander?.name ?? "");
-												setEditCommanderAImageUrl(commander?.imageUrl ?? "");
-												if (commander?.id === editCommanderBId) {
-													setEditCommanderBId("");
-													setEditCommanderBName("");
-													setEditCommanderBImageUrl("");
-												}
-											}}
+											onSelect={commander => handleCommanderSelect("edit", "A", commander)}
 										/>
 
 										<CommanderSearchField
@@ -517,12 +677,44 @@ export default function DecksList() {
 											selectedName={editCommanderBName}
 											commanders={commanders}
 											excludedIds={editCommanderAId ? [editCommanderAId] : []}
-											onSelect={commander => {
-												setEditCommanderBId(commander?.id ?? "");
-												setEditCommanderBName(commander?.name ?? "");
-												setEditCommanderBImageUrl(commander?.imageUrl ?? "");
-											}}
+											onSelect={commander => handleCommanderSelect("edit", "B", commander)}
 										/>
+
+										{colorChoice?.mode === "edit" && (
+											<div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+												<div className="w-full max-w-sm rounded-2xl border border-neutral-200 bg-white p-6 shadow-2xl">
+													<div className="text-lg font-semibold text-neutral-900">Choose a color</div>
+													<p className="mt-1 text-sm text-neutral-600">
+														{colorChoice.commanderName} needs a chosen color.
+													</p>
+													<div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
+														{COLOR_OPTIONS.map(option => (
+															<button
+																key={option.value}
+																type="button"
+																onClick={() => {
+																	setCommanderColors("edit", colorChoice.slot, [option.value]);
+																	setColorChoice(null);
+																}}
+																className="rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+															>
+																{option.label}
+															</button>
+														))}
+													</div>
+													<button
+														type="button"
+														onClick={() => {
+															clearCommanderSelection("edit", colorChoice.slot);
+															setColorChoice(null);
+														}}
+														className="mt-4 rounded-2xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+													>
+														Cancel
+													</button>
+												</div>
+											</div>
+										)}
 									</div>
 
 									<div className="border-t border-neutral-200 px-6 py-4">
@@ -563,7 +755,10 @@ export default function DecksList() {
 
 				{decks.map(d => {
 					const { a, b } = commandersByDeck(d);
-					const colors = [...(a?.colors ?? []), ...(b?.colors ?? [])];
+					const colors = [
+						...(d.commanderAColors ?? a?.colors ?? []),
+						...(d.commanderBColors ?? b?.colors ?? []),
+					];
 					const commanderAText = a?.name ?? d.commanderAName ?? `Commander ${String(d.commanderAId).slice(0, 8)}`;
 					const commanderBText = b?.name ?? d.commanderBName;
 					const commanderText = commanderBText

@@ -14,9 +14,6 @@
     "id": 3,
     "name": "Birdemic",
     "playerId": 1,
-    "commanderAId": "4dc2d415-fdf7-4f2d-95d0-a793ffc26491",
-    "commanderAName": "Rendmaw, Creaking Nest",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/d/4dc2d415-fdf7-4f2d-95d0-a793ffc26491.jpg?1783909662",
     "commanderAColors": [
       "B",
       "G"
@@ -40,7 +37,10 @@
     "playerId": 5,
     "commanderAId": "47f7d313-8333-41fe-8bfa-c96774dac228",
     "commanderAName": "Polukranos Reborn // Polukranos, Engine of Ruin",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/7/47f7d313-8333-41fe-8bfa-c96774dac228.jpg?1783916971"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/7/47f7d313-8333-41fe-8bfa-c96774dac228.jpg?1783916971",
+    "commanderAColors": [
+      "G"
+    ]
   },
   {
     "id": 11,
@@ -288,7 +288,10 @@
     "playerId": 3,
     "commanderAId": "14dc88ee-bba9-4625-af0d-89f3762a0ead",
     "commanderAName": "Tergrid, God of Fright",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/1/4/14dc88ee-bba9-4625-af0d-89f3762a0ead.jpg?1783928244"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/1/4/14dc88ee-bba9-4625-af0d-89f3762a0ead.jpg?1783928244",
+    "commanderAColors": [
+      "B"
+    ]
   },
   {
     "id": 32,
@@ -309,7 +312,12 @@
     "playerId": 2,
     "commanderAId": "ba09360a-067e-48a5-bdc5-a19fd066a785",
     "commanderAName": "Extus, Oriq Overlord",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1783927337"
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1783927337",
+    "commanderAColors": [
+      "B",
+      "R",
+      "W"
+    ]
   },
   {
     "id": 34,
@@ -323,6 +331,9 @@
     "commanderBImageUrl": "https://cards.scryfall.io/normal/front/9/a/9a1ee042-6713-4e9e-9901-9b94d99d33f1.jpg?1783914685",
     "commanderAColors": [
       "R",
+      "W"
+    ],
+    "commanderBColors": [
       "W"
     ]
   }
