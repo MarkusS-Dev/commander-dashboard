@@ -25,7 +25,7 @@ export default function AppLayout({
 			<div className="mx-auto max-w-6xl px-6 pt-10">
 				{/* Title */}
 				<h1 className="text-3xl font-semibold tracking-tight text-center">
-					Commander stats
+					Commander Dashboard
 				</h1>
 				{/* Tabs + auth */}
 <div className="mt-6 flex items-center">
