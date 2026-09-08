@@ -163,7 +163,27 @@ export default function DashboardPage() {
 		const loadedGames = data.games;
 		const loadedCommanders = data.commanders;
 
-		setLandArtByColor(data.landArtByColor ?? DEFAULT_LAND_ART_BY_COLOR);
+		const bootstrapLandArt = data.landArtByColor ?? DEFAULT_LAND_ART_BY_COLOR;
+		setLandArtByColor(bootstrapLandArt);
+
+		if (Object.values(bootstrapLandArt).some(imageUrl => !imageUrl)) {
+			try {
+				const refreshedLandArt = await fetchJsonCached<Record<ManaColor, string>>(
+					"/api/land-art",
+					{ ttlMs: 60 * 60_000 }
+				);
+				setLandArtByColor(current => {
+					const next = { ...current };
+					for (const color of Object.keys(next) as ManaColor[]) {
+						if (!next[color] && refreshedLandArt[color])
+							next[color] = refreshedLandArt[color];
+					}
+					return next;
+				});
+			} catch {
+				// Keep the fallback background if Scryfall is temporarily unavailable.
+			}
+		}
 
 		setPlayers(loadedPlayers);
 		setDecks(loadedDecks);
