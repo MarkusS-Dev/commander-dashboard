@@ -469,5 +469,16 @@
     "commanderAColors": [
       "G"
     ]
+  },
+  {
+    "id": 46,
+    "name": "Mole Man, Moloid Master",
+    "playerId": 3,
+    "commanderAId": "1b406cc5-75c9-430a-83a2-de0f2a8aeae6",
+    "commanderAName": "Mole Man, Moloid Master",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/1/b/1b406cc5-75c9-430a-83a2-de0f2a8aeae6.jpg?1783902919",
+    "commanderAColors": [
+      "G"
+    ]
   }
 ]
