@@ -104,5 +104,18 @@
     ],
     "winnerDeckId": 34,
     "notes": ""
+  },
+  {
+    "id": 10,
+    "date": "2026-05-05",
+    "deckIds": [
+      35,
+      36,
+      38,
+      17,
+      37
+    ],
+    "winnerDeckId": 35,
+    "notes": ""
   }
 ]
