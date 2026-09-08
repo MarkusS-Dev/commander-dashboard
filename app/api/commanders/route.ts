@@ -7,7 +7,6 @@ import { resolveDeckCommandersById } from "@/lib/github/deckRepository";
 export async function GET(req: Request) {
 	try {
 		const url = new URL(req.url);
-		const query = url.searchParams.get("query") ?? url.searchParams.get("q") ?? "";
 		const ids = url.searchParams.get("ids") ?? "";
 
 		if (ids.trim()) {

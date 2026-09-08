@@ -1,4 +1,5 @@
 import { readJson, writeJson } from "./client";
+import bundledCommanderCache from "@/data/commanders-cache.json";
 
 type ScryfallCard = {
 	id: string;
@@ -149,7 +150,9 @@ async function loadCommanderCache(): Promise<CommanderCache | null> {
 		const cache = await readJson<CommanderCache>(CACHE_PATH);
 		return Array.isArray(cache.commanders) ? cache : null;
 	} catch {
-		return null;
+		// Keep deck creation available when the optional GitHub-backed store is
+		// temporarily unavailable. The bundled cache is included in every build.
+		return bundledCommanderCache as CommanderCache;
 	}
 }
 
@@ -165,7 +168,10 @@ async function getCommanderCache(): Promise<CommanderCache> {
 	const cache = await loadCommanderCache();
 	const sourceUpdatedAt = await fetchCommanderSourceUpdatedAt();
 
-	if (cache && sourceUpdatedAt && cache.sourceUpdatedAt === sourceUpdatedAt)
+	// A cached catalog is sufficient for normal requests. Only refresh when
+	// Scryfall explicitly reports a newer source; do not make availability of
+	// the commander picker depend on a live Scryfall request.
+	if (cache && (!sourceUpdatedAt || cache.sourceUpdatedAt === sourceUpdatedAt))
 		return cache;
 
 	try {
