@@ -480,5 +480,18 @@
     "commanderAColors": [
       "G"
     ]
+  },
+  {
+    "id": 47,
+    "name": "Uugguu, the Omniplasm",
+    "playerId": 2,
+    "commanderAId": "caa3e9e4-e1d9-4896-9a66-493e7446aca0",
+    "commanderAName": "Uugguu, the Omniplasm",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/c/a/caa3e9e4-e1d9-4896-9a66-493e7446aca0.jpg?1785759174",
+    "commanderAColors": [
+      "B",
+      "G",
+      "U"
+    ]
   }
 ]
