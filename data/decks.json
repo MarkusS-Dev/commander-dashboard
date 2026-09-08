@@ -447,5 +447,16 @@
       "U",
       "W"
     ]
+  },
+  {
+    "id": 44,
+    "name": "Bob, Reluctant HYDRA Agent",
+    "playerId": 5,
+    "commanderAId": "423c5752-b634-44a9-82b3-2dd1045e4d90",
+    "commanderAName": "Bob, Reluctant HYDRA Agent",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/2/423c5752-b634-44a9-82b3-2dd1045e4d90.jpg?1783903064",
+    "commanderAColors": [
+      "B"
+    ]
   }
 ]
