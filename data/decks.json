@@ -458,5 +458,16 @@
     "commanderAColors": [
       "B"
     ]
+  },
+  {
+    "id": 45,
+    "name": "Six",
+    "playerId": 1,
+    "commanderAId": "f9246b68-580f-4f53-883d-7900880e4b0d",
+    "commanderAName": "Six",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/f/9/f9246b68-580f-4f53-883d-7900880e4b0d.jpg?1783911256",
+    "commanderAColors": [
+      "G"
+    ]
   }
 ]
