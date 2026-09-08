@@ -447,5 +447,51 @@
       "U",
       "W"
     ]
+  },
+  {
+    "id": 44,
+    "name": "Bob, Reluctant HYDRA Agent",
+    "playerId": 5,
+    "commanderAId": "423c5752-b634-44a9-82b3-2dd1045e4d90",
+    "commanderAName": "Bob, Reluctant HYDRA Agent",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/2/423c5752-b634-44a9-82b3-2dd1045e4d90.jpg?1783903064",
+    "commanderAColors": [
+      "B"
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Six",
+    "playerId": 1,
+    "commanderAId": "f9246b68-580f-4f53-883d-7900880e4b0d",
+    "commanderAName": "Six",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/f/9/f9246b68-580f-4f53-883d-7900880e4b0d.jpg?1783911256",
+    "commanderAColors": [
+      "G"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "Mole Man, Moloid Master",
+    "playerId": 3,
+    "commanderAId": "1b406cc5-75c9-430a-83a2-de0f2a8aeae6",
+    "commanderAName": "Mole Man, Moloid Master",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/1/b/1b406cc5-75c9-430a-83a2-de0f2a8aeae6.jpg?1783902919",
+    "commanderAColors": [
+      "G"
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Uugguu, the Omniplasm",
+    "playerId": 2,
+    "commanderAId": "caa3e9e4-e1d9-4896-9a66-493e7446aca0",
+    "commanderAName": "Uugguu, the Omniplasm",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/c/a/caa3e9e4-e1d9-4896-9a66-493e7446aca0.jpg?1785759174",
+    "commanderAColors": [
+      "B",
+      "G",
+      "U"
+    ]
   }
 ]
