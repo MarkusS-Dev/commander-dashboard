@@ -33,7 +33,17 @@ export type CommanderSummary = {
 type CommanderCache = {
 	totalCards: number;
 	updatedAt: string;
+	sourceUpdatedAt?: string;
 	commanders: CommanderSummary[];
+};
+
+type ScryfallBulkDataItem = {
+	type: string;
+	updated_at: string;
+};
+
+type ScryfallBulkDataResponse = {
+	data: ScryfallBulkDataItem[];
 };
 
 const CACHE_PATH = "data/commanders-cache.json";
@@ -82,6 +92,16 @@ async function fetchCommanderPage(url: string): Promise<ScryfallList<ScryfallCar
 	return fetchScryfallJson<ScryfallList<ScryfallCard>>(url);
 }
 
+async function fetchCommanderSourceUpdatedAt(): Promise<string | null> {
+	try {
+		const bulk = await fetchScryfallJson<ScryfallBulkDataResponse>("https://api.scryfall.com/bulk-data");
+		const oracle = bulk.data.find(item => item.type === "oracle_cards");
+		return oracle?.updated_at ?? null;
+	} catch {
+		return null;
+	}
+}
+
 async function fetchCommanderCacheFromScryfall(): Promise<CommanderCache> {
 	const baseUrl = `${SEARCH_URL}?q=${encodeURIComponent(SEARCH_QUERY)}&unique=cards&order=name&dir=asc&page=1`;
 	const firstPage = await fetchCommanderPage(baseUrl);
@@ -112,6 +132,7 @@ async function fetchCommanderCacheFromScryfall(): Promise<CommanderCache> {
 	return {
 		totalCards: firstPage.total_cards,
 		updatedAt: new Date().toISOString(),
+		sourceUpdatedAt: await fetchCommanderSourceUpdatedAt() ?? new Date().toISOString(),
 		commanders,
 	};
 }
@@ -133,22 +154,31 @@ async function loadCommanderCache(): Promise<CommanderCache | null> {
 }
 
 async function saveCommanderCache(cache: CommanderCache) {
-	await writeJson(CACHE_PATH, cache);
+	try {
+		await writeJson(CACHE_PATH, cache);
+	} catch {
+		// Ignore write failures (e.g. read-only serverless filesystem).
+	}
 }
 
 async function getCommanderCache(): Promise<CommanderCache> {
 	const cache = await loadCommanderCache();
-	const searchUrl = `${SEARCH_URL}?q=${encodeURIComponent(SEARCH_QUERY)}&unique=cards&order=name&dir=asc&page=1`;
-	const cacheNeedsHydration = Boolean(
-		cache?.commanders.some(commander =>
-			!Array.isArray(commander.colors) || !commander.imageUrl
-		)
-	);
+	const sourceUpdatedAt = await fetchCommanderSourceUpdatedAt();
+
+	if (cache && sourceUpdatedAt && cache.sourceUpdatedAt === sourceUpdatedAt)
+		return cache;
 
 	try {
+		if (cache && sourceUpdatedAt && cache.sourceUpdatedAt !== sourceUpdatedAt) {
+			const refreshed = await fetchCommanderCacheFromScryfall();
+			await saveCommanderCache(refreshed);
+			return refreshed;
+		}
+
+		const searchUrl = `${SEARCH_URL}?q=${encodeURIComponent(SEARCH_QUERY)}&unique=cards&order=name&dir=asc&page=1`;
 		const latest = await fetchCommanderPage(searchUrl);
 
-		if (!cache || cache.totalCards !== latest.total_cards || cacheNeedsHydration) {
+		if (!cache || cache.totalCards !== latest.total_cards) {
 			const refreshed = await fetchCommanderCacheFromScryfall();
 			await saveCommanderCache(refreshed);
 			return refreshed;

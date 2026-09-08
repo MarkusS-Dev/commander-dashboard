@@ -2,6 +2,7 @@ import {
 	loadCommanderCatalog,
 	resolveCommandersById,
 } from "@/lib/github/commanderIndexRepository";
+import { resolveDeckCommandersById } from "@/lib/github/deckRepository";
 
 export async function GET(req: Request) {
 	try {
@@ -16,7 +17,15 @@ export async function GET(req: Request) {
 				.filter(Boolean)
 				.map(id => (id.match(/^\d+$/) ? Number(id) : id));
 
-			return Response.json(await resolveCommandersById(commanderIds));
+			const fromDecks = await resolveDeckCommandersById(commanderIds);
+			const foundIds = new Set(fromDecks.map(commander => commander.id));
+			const missingIds = commanderIds.filter(id => !foundIds.has(String(id)));
+
+			if (missingIds.length === 0)
+				return Response.json(fromDecks);
+
+			const hydratedMissing = await resolveCommandersById(missingIds);
+			return Response.json([...fromDecks, ...hydratedMissing]);
 		}
 
 		return Response.json(await loadCommanderCatalog());
