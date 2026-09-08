@@ -1,12 +1,256 @@
 [
   {
-    "id": "c62990d7-a337-4fc3-859c-63bc1dade1b9",
-    "name": "Zurzoth, Chaos Rider",
+    "id": "bf708169-a307-494b-b8d8-baae53b2e2f2",
+    "name": "Abigale, Eloquent First-Year",
+    "color": [
+      "B",
+      "W"
+    ],
+    "manacost": "{W/B}{W/B}",
+    "imageurl": "https://cards.scryfall.io/normal/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1783904418"
+  },
+  {
+    "id": "4b68bc46-5591-44dd-becc-eca154066925",
+    "name": "Abomination of Llanowar",
+    "color": [
+      "B",
+      "G"
+    ],
+    "manacost": "{1}{B}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/4/b/4b68bc46-5591-44dd-becc-eca154066925.jpg?1783928307"
+  },
+  {
+    "id": "36356522-15fc-41e2-bf14-a745e5a96a50",
+    "name": "Arcade Gannon",
+    "color": [
+      "U",
+      "W"
+    ],
+    "manacost": "{2}{W}{U}",
+    "imageurl": "https://cards.scryfall.io/normal/front/3/6/36356522-15fc-41e2-bf14-a745e5a96a50.jpg?1783912393"
+  },
+  {
+    "id": "721cd840-5f2e-40b7-8b33-ea2d6343d390",
+    "name": "Aron, Benalia's Ruin",
+    "color": [
+      "B",
+      "W"
+    ],
+    "manacost": "{W}{W}{B}",
+    "imageurl": "https://cards.scryfall.io/normal/front/7/2/721cd840-5f2e-40b7-8b33-ea2d6343d390.jpg?1783907033"
+  },
+  {
+    "id": "5924c01f-2815-4e37-b700-3ba6cc81e0e4",
+    "name": "Ashling, the Limitless",
     "color": [
       "R"
     ],
     "manacost": "{2}{R}",
-    "imageurl": "https://cards.scryfall.io/normal/front/c/6/c62990d7-a337-4fc3-859c-63bc1dade1b9.jpg?1783923255"
+    "imageurl": "https://cards.scryfall.io/normal/front/5/9/5924c01f-2815-4e37-b700-3ba6cc81e0e4.jpg?1783904607"
+  },
+  {
+    "id": "9a2e4252-9fbc-4d43-8935-db2cafaa7b5f",
+    "name": "Auntie Ool, Cursewretch",
+    "color": [
+      "B",
+      "G",
+      "R"
+    ],
+    "manacost": "{1}{B}{R}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/9/a/9a2e4252-9fbc-4d43-8935-db2cafaa7b5f.jpg?1783904606"
+  },
+  {
+    "id": "db3b4f73-e241-4d60-a877-25327092c291",
+    "name": "Aveline de Grandpre",
+    "color": [
+      "G"
+    ],
+    "manacost": "{2}{G}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/d/b/db3b4f73-e241-4d60-a877-25327092c291.jpg?1783910976"
+  },
+  {
+    "id": "2e261489-8dde-4594-8868-69f432f03d03",
+    "name": "Betor, Ancestor's Voice",
+    "color": [
+      "B",
+      "G",
+      "W"
+    ],
+    "manacost": "{2}{W}{B}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/2/e/2e261489-8dde-4594-8868-69f432f03d03.jpg?1783907191"
+  },
+  {
+    "id": "f588fa50-7cc5-41ba-90df-2d252eb5c785",
+    "name": "Blech, Loafing Pest",
+    "color": [
+      "B",
+      "G"
+    ],
+    "manacost": "{1}{B}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/f/5/f588fa50-7cc5-41ba-90df-2d252eb5c785.jpg?1783903648"
+  },
+  {
+    "id": "423c5752-b634-44a9-82b3-2dd1045e4d90",
+    "name": "Bob, Reluctant HYDRA Agent",
+    "color": [
+      "B"
+    ],
+    "manacost": "",
+    "imageurl": "https://cards.scryfall.io/normal/front/4/2/423c5752-b634-44a9-82b3-2dd1045e4d90.jpg?1783903064"
+  },
+  {
+    "id": "9a1ee042-6713-4e9e-9901-9b94d99d33f1",
+    "name": "Clara Oswald",
+    "color": [
+      "W"
+    ],
+    "manacost": "{6}",
+    "imageurl": "https://cards.scryfall.io/normal/front/9/a/9a1ee042-6713-4e9e-9901-9b94d99d33f1.jpg?1783914685"
+  },
+  {
+    "id": "e0ad8e7f-cda0-4529-94fc-dd3709158a94",
+    "name": "Doran, the Siege Tower",
+    "color": [
+      "B",
+      "G",
+      "W"
+    ],
+    "manacost": "{W}{B}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/e/0/e0ad8e7f-cda0-4529-94fc-dd3709158a94.jpg?1783921840"
+  },
+  {
+    "id": "6165eb73-49a8-4337-aa5d-7d9d48b916c9",
+    "name": "Elanor Gardner",
+    "color": [
+      "G"
+    ],
+    "manacost": "{3}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/6/1/6165eb73-49a8-4337-aa5d-7d9d48b916c9.jpg?1783916222"
+  },
+  {
+    "id": "b6a7d041-957a-4b19-9517-214689dadd45",
+    "name": "Erinis, Gloom Stalker",
+    "color": [
+      "G"
+    ],
+    "manacost": "{2}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/b/6/b6a7d041-957a-4b19-9517-214689dadd45.jpg?1783922714"
+  },
+  {
+    "id": "ba09360a-067e-48a5-bdc5-a19fd066a785",
+    "name": "Extus, Oriq Overlord",
+    "color": [
+      "B",
+      "R",
+      "W"
+    ],
+    "manacost": "",
+    "imageurl": "https://cards.scryfall.io/normal/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1783927337"
+  },
+  {
+    "id": "41e58eb8-e5b9-4ef6-be1f-00e28cebb998",
+    "name": "Flubs, the Fool",
+    "color": [
+      "G",
+      "R",
+      "U"
+    ],
+    "manacost": "{G}{U}{R}",
+    "imageurl": "https://cards.scryfall.io/normal/front/4/1/41e58eb8-e5b9-4ef6-be1f-00e28cebb998.jpg?1783910621"
+  },
+  {
+    "id": "f90eb8ef-ad70-4d6c-9958-e6153f8599bc",
+    "name": "G'raha Tia, Scion Reborn",
+    "color": [
+      "B",
+      "U",
+      "W"
+    ],
+    "manacost": "{W}{U}{B}",
+    "imageurl": "https://cards.scryfall.io/normal/front/f/9/f90eb8ef-ad70-4d6c-9958-e6153f8599bc.jpg?1783906373"
+  },
+  {
+    "id": "1925dc45-4dee-4772-aa16-3b4ca54be6c7",
+    "name": "Grist, the Hunger Tide",
+    "color": [
+      "B",
+      "G"
+    ],
+    "manacost": "{1}{B}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/1/9/1925dc45-4dee-4772-aa16-3b4ca54be6c7.jpg?1783909593"
+  },
+  {
+    "id": "fbdb68cc-5516-481a-94c5-59f6c69b8a17",
+    "name": "Hope Estheim",
+    "color": [
+      "U",
+      "W"
+    ],
+    "manacost": "{W}{U}",
+    "imageurl": "https://cards.scryfall.io/normal/front/f/b/fbdb68cc-5516-481a-94c5-59f6c69b8a17.jpg?1783906569"
+  },
+  {
+    "id": "a062a004-984e-4b62-960c-af7288f7a3e9",
+    "name": "Isshin, Two Heavens as One",
+    "color": [
+      "B",
+      "R",
+      "W"
+    ],
+    "manacost": "{R}{W}{B}",
+    "imageurl": "https://cards.scryfall.io/normal/front/a/0/a062a004-984e-4b62-960c-af7288f7a3e9.jpg?1783923833"
+  },
+  {
+    "id": "e4b1aa1e-b4e3-4346-8937-76b312501c70",
+    "name": "Jodah, the Unifier",
+    "color": [
+      "B",
+      "G",
+      "R",
+      "U",
+      "W"
+    ],
+    "manacost": "{W}{U}{B}{R}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/e/4/e4b1aa1e-b4e3-4346-8937-76b312501c70.jpg?1783921283"
+  },
+  {
+    "id": "afdab464-3674-449b-be01-1cbd21fced23",
+    "name": "Kraven the Hunter",
+    "color": [
+      "B",
+      "G"
+    ],
+    "manacost": "{1}{B}{G}",
+    "imageurl": "https://cards.scryfall.io/normal/front/a/f/afdab464-3674-449b-be01-1cbd21fced23.jpg?1783905315"
+  },
+  {
+    "id": "a934590b-5c70-4f07-af67-fbe817a99531",
+    "name": "Miirym, Sentinel Wyrm",
+    "color": [
+      "G",
+      "R",
+      "U"
+    ],
+    "manacost": "{3}{G}{U}{R}",
+    "imageurl": "https://cards.scryfall.io/normal/front/a/9/a934590b-5c70-4f07-af67-fbe817a99531.jpg?1783922689"
+  },
+  {
+    "id": "1b406cc5-75c9-430a-83a2-de0f2a8aeae6",
+    "name": "Mole Man, Moloid Master",
+    "color": [
+      "G"
+    ],
+    "manacost": "",
+    "imageurl": "https://cards.scryfall.io/normal/front/1/b/1b406cc5-75c9-430a-83a2-de0f2a8aeae6.jpg?1783902919"
+  },
+  {
+    "id": "47f7d313-8333-41fe-8bfa-c96774dac228",
+    "name": "Polukranos Reborn // Polukranos, Engine of Ruin",
+    "color": [
+      "G"
+    ],
+    "manacost": "",
+    "imageurl": "https://cards.scryfall.io/normal/front/4/7/47f7d313-8333-41fe-8bfa-c96774dac228.jpg?1783916971"
   },
   {
     "id": "4dc2d415-fdf7-4f2d-95d0-a793ffc26491",
@@ -29,13 +273,101 @@
     "imageurl": "https://cards.scryfall.io/normal/front/f/e/fe3e7dd2-b66d-4218-9fde-f84bec26b7bf.jpg?1783909051"
   },
   {
-    "id": "47f7d313-8333-41fe-8bfa-c96774dac228",
-    "name": "Polukranos Reborn // Polukranos, Engine of Ruin",
+    "id": "6487ccbf-f6cd-45a6-8514-2c458b655ef2",
+    "name": "Saruman, the White Hand",
+    "color": [
+      "B",
+      "R",
+      "U"
+    ],
+    "manacost": "{1}{U}{B}{R}",
+    "imageurl": "https://cards.scryfall.io/normal/front/6/4/6487ccbf-f6cd-45a6-8514-2c458b655ef2.jpg?1783916037"
+  },
+  {
+    "id": "c876f9b3-b4f6-4177-9c43-443ae2a028d0",
+    "name": "Scion of Halaster",
+    "color": [
+      "B"
+    ],
+    "manacost": "{1}{B}",
+    "imageurl": "https://cards.scryfall.io/normal/front/c/8/c876f9b3-b4f6-4177-9c43-443ae2a028d0.jpg?1783922752"
+  },
+  {
+    "id": "c133a860-7b8d-485d-b9a2-bf8ae3a68f47",
+    "name": "Scriv, the Obligator",
+    "color": [
+      "B",
+      "W"
+    ],
+    "manacost": "{2}{W}{B}",
+    "imageurl": "https://cards.scryfall.io/normal/front/c/1/c133a860-7b8d-485d-b9a2-bf8ae3a68f47.jpg?1783903867"
+  },
+  {
+    "id": "214a695b-208e-4fd5-9ceb-23c882eadcf7",
+    "name": "Shadrix Silverquill",
+    "color": [
+      "B",
+      "W"
+    ],
+    "manacost": "{3}{W}{B}",
+    "imageurl": "https://cards.scryfall.io/normal/front/2/1/214a695b-208e-4fd5-9ceb-23c882eadcf7.jpg?1783903745"
+  },
+  {
+    "id": "969ac7dd-f3aa-4888-9ff0-d16a31b5e7a9",
+    "name": "Shorikai, Genesis Engine",
+    "color": [
+      "U",
+      "W"
+    ],
+    "manacost": "{2}{W}{U}",
+    "imageurl": "https://cards.scryfall.io/normal/front/9/6/969ac7dd-f3aa-4888-9ff0-d16a31b5e7a9.jpg?1783923999"
+  },
+  {
+    "id": "f9246b68-580f-4f53-883d-7900880e4b0d",
+    "name": "Six",
     "color": [
       "G"
     ],
     "manacost": "",
-    "imageurl": "https://cards.scryfall.io/normal/front/4/7/47f7d313-8333-41fe-8bfa-c96774dac228.jpg?1783916971"
+    "imageurl": "https://cards.scryfall.io/normal/front/f/9/f9246b68-580f-4f53-883d-7900880e4b0d.jpg?1783911256"
+  },
+  {
+    "id": "6a5d8fad-2ffd-4645-8c49-907999b6cecf",
+    "name": "Smaug the Magnificent",
+    "color": [
+      "R"
+    ],
+    "manacost": "{2}{R}{R}",
+    "imageurl": "https://cards.scryfall.io/normal/front/6/a/6a5d8fad-2ffd-4645-8c49-907999b6cecf.jpg?1783902784"
+  },
+  {
+    "id": "eb79f973-2384-4de4-81fb-14ba5a0e5556",
+    "name": "Tadeas, Juniper Ascendant",
+    "color": [
+      "G",
+      "W"
+    ],
+    "manacost": "{2}{G}{W}",
+    "imageurl": "https://cards.scryfall.io/normal/front/e/b/eb79f973-2384-4de4-81fb-14ba5a0e5556.jpg?1783917774"
+  },
+  {
+    "id": "14dc88ee-bba9-4625-af0d-89f3762a0ead",
+    "name": "Tergrid, God of Fright",
+    "color": [
+      "B"
+    ],
+    "manacost": "",
+    "imageurl": "https://cards.scryfall.io/normal/front/1/4/14dc88ee-bba9-4625-af0d-89f3762a0ead.jpg?1783928244"
+  },
+  {
+    "id": "7a51472c-b61f-4d31-8753-a9ec90d12889",
+    "name": "The War Doctor",
+    "color": [
+      "R",
+      "W"
+    ],
+    "manacost": "{2}{R}{W}",
+    "imageurl": "https://cards.scryfall.io/normal/front/7/a/7a51472c-b61f-4d31-8753-a9ec90d12889.jpg?1783914620"
   },
   {
     "id": "70b6670f-a9fa-4d75-b0a7-c01b5071a514",
@@ -49,238 +381,15 @@
     "imageurl": "https://cards.scryfall.io/normal/front/7/0/70b6670f-a9fa-4d75-b0a7-c01b5071a514.jpg?1783904920"
   },
   {
-    "id": "6165eb73-49a8-4337-aa5d-7d9d48b916c9",
-    "name": "Elanor Gardner",
-    "color": [
-      "G"
-    ],
-    "manacost": "{3}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/6/1/6165eb73-49a8-4337-aa5d-7d9d48b916c9.jpg?1783916222"
-  },
-  {
-    "id": "bf708169-a307-494b-b8d8-baae53b2e2f2",
-    "name": "Abigale, Eloquent First-Year",
-    "color": [
-      "B",
-      "W"
-    ],
-    "manacost": "{W/B}{W/B}",
-    "imageurl": "https://cards.scryfall.io/normal/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1783904418"
-  },
-  {
-    "id": "9a2e4252-9fbc-4d43-8935-db2cafaa7b5f",
-    "name": "Auntie Ool, Cursewretch",
+    "id": "caa3e9e4-e1d9-4896-9a66-493e7446aca0",
+    "name": "Uugguu, the Omniplasm",
     "color": [
       "B",
       "G",
-      "R"
-    ],
-    "manacost": "{1}{B}{R}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/9/a/9a2e4252-9fbc-4d43-8935-db2cafaa7b5f.jpg?1783904606"
-  },
-  {
-    "id": "a062a004-984e-4b62-960c-af7288f7a3e9",
-    "name": "Isshin, Two Heavens as One",
-    "color": [
-      "B",
-      "R",
-      "W"
-    ],
-    "manacost": "{R}{W}{B}",
-    "imageurl": "https://cards.scryfall.io/normal/front/a/0/a062a004-984e-4b62-960c-af7288f7a3e9.jpg?1783923833"
-  },
-  {
-    "id": "eb79f973-2384-4de4-81fb-14ba5a0e5556",
-    "name": "Tadeas, Juniper Ascendant",
-    "color": [
-      "G",
-      "W"
-    ],
-    "manacost": "{2}{G}{W}",
-    "imageurl": "https://cards.scryfall.io/normal/front/e/b/eb79f973-2384-4de4-81fb-14ba5a0e5556.jpg?1783917774"
-  },
-  {
-    "id": "a934590b-5c70-4f07-af67-fbe817a99531",
-    "name": "Miirym, Sentinel Wyrm",
-    "color": [
-      "G",
-      "R",
       "U"
-    ],
-    "manacost": "{3}{G}{U}{R}",
-    "imageurl": "https://cards.scryfall.io/normal/front/a/9/a934590b-5c70-4f07-af67-fbe817a99531.jpg?1783922689"
-  },
-  {
-    "id": "e4b1aa1e-b4e3-4346-8937-76b312501c70",
-    "name": "Jodah, the Unifier",
-    "color": [
-      "B",
-      "G",
-      "R",
-      "U",
-      "W"
-    ],
-    "manacost": "{W}{U}{B}{R}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/e/4/e4b1aa1e-b4e3-4346-8937-76b312501c70.jpg?1783921283"
-  },
-  {
-    "id": "214a695b-208e-4fd5-9ceb-23c882eadcf7",
-    "name": "Shadrix Silverquill",
-    "color": [
-      "B",
-      "W"
-    ],
-    "manacost": "{3}{W}{B}",
-    "imageurl": "https://cards.scryfall.io/normal/front/2/1/214a695b-208e-4fd5-9ceb-23c882eadcf7.jpg?1783903745"
-  },
-  {
-    "id": "41e58eb8-e5b9-4ef6-be1f-00e28cebb998",
-    "name": "Flubs, the Fool",
-    "color": [
-      "G",
-      "R",
-      "U"
-    ],
-    "manacost": "{G}{U}{R}",
-    "imageurl": "https://cards.scryfall.io/normal/front/4/1/41e58eb8-e5b9-4ef6-be1f-00e28cebb998.jpg?1783910621"
-  },
-  {
-    "id": "36356522-15fc-41e2-bf14-a745e5a96a50",
-    "name": "Arcade Gannon",
-    "color": [
-      "U",
-      "W"
-    ],
-    "manacost": "{2}{W}{U}",
-    "imageurl": "https://cards.scryfall.io/normal/front/3/6/36356522-15fc-41e2-bf14-a745e5a96a50.jpg?1783912393"
-  },
-  {
-    "id": "fbdb68cc-5516-481a-94c5-59f6c69b8a17",
-    "name": "Hope Estheim",
-    "color": [
-      "U",
-      "W"
-    ],
-    "manacost": "{W}{U}",
-    "imageurl": "https://cards.scryfall.io/normal/front/f/b/fbdb68cc-5516-481a-94c5-59f6c69b8a17.jpg?1783906569"
-  },
-  {
-    "id": "afdab464-3674-449b-be01-1cbd21fced23",
-    "name": "Kraven the Hunter",
-    "color": [
-      "B",
-      "G"
-    ],
-    "manacost": "{1}{B}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/a/f/afdab464-3674-449b-be01-1cbd21fced23.jpg?1783905315"
-  },
-  {
-    "id": "6487ccbf-f6cd-45a6-8514-2c458b655ef2",
-    "name": "Saruman, the White Hand",
-    "color": [
-      "B",
-      "R",
-      "U"
-    ],
-    "manacost": "{1}{U}{B}{R}",
-    "imageurl": "https://cards.scryfall.io/normal/front/6/4/6487ccbf-f6cd-45a6-8514-2c458b655ef2.jpg?1783916037"
-  },
-  {
-    "id": "721cd840-5f2e-40b7-8b33-ea2d6343d390",
-    "name": "Aron, Benalia's Ruin",
-    "color": [
-      "B",
-      "W"
-    ],
-    "manacost": "{W}{W}{B}",
-    "imageurl": "https://cards.scryfall.io/normal/front/7/2/721cd840-5f2e-40b7-8b33-ea2d6343d390.jpg?1783907033"
-  },
-  {
-    "id": "5924c01f-2815-4e37-b700-3ba6cc81e0e4",
-    "name": "Ashling, the Limitless",
-    "color": [
-      "R"
-    ],
-    "manacost": "{2}{R}",
-    "imageurl": "https://cards.scryfall.io/normal/front/5/9/5924c01f-2815-4e37-b700-3ba6cc81e0e4.jpg?1783904607"
-  },
-  {
-    "id": "b6a7d041-957a-4b19-9517-214689dadd45",
-    "name": "Erinis, Gloom Stalker",
-    "color": [
-      "G"
-    ],
-    "manacost": "{2}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/b/6/b6a7d041-957a-4b19-9517-214689dadd45.jpg?1783922714"
-  },
-  {
-    "id": "c876f9b3-b4f6-4177-9c43-443ae2a028d0",
-    "name": "Scion of Halaster",
-    "color": [
-      "B"
-    ],
-    "manacost": "{1}{B}",
-    "imageurl": "https://cards.scryfall.io/normal/front/c/8/c876f9b3-b4f6-4177-9c43-443ae2a028d0.jpg?1783922752"
-  },
-  {
-    "id": "969ac7dd-f3aa-4888-9ff0-d16a31b5e7a9",
-    "name": "Shorikai, Genesis Engine",
-    "color": [
-      "U",
-      "W"
-    ],
-    "manacost": "{2}{W}{U}",
-    "imageurl": "https://cards.scryfall.io/normal/front/9/6/969ac7dd-f3aa-4888-9ff0-d16a31b5e7a9.jpg?1783923999"
-  },
-  {
-    "id": "14dc88ee-bba9-4625-af0d-89f3762a0ead",
-    "name": "Tergrid, God of Fright",
-    "color": [
-      "B"
     ],
     "manacost": "",
-    "imageurl": "https://cards.scryfall.io/normal/front/1/4/14dc88ee-bba9-4625-af0d-89f3762a0ead.jpg?1783928244"
-  },
-  {
-    "id": "e0ad8e7f-cda0-4529-94fc-dd3709158a94",
-    "name": "Doran, the Siege Tower",
-    "color": [
-      "B",
-      "G",
-      "W"
-    ],
-    "manacost": "{W}{B}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/e/0/e0ad8e7f-cda0-4529-94fc-dd3709158a94.jpg?1783921840"
-  },
-  {
-    "id": "ba09360a-067e-48a5-bdc5-a19fd066a785",
-    "name": "Extus, Oriq Overlord",
-    "color": [
-      "B",
-      "R",
-      "W"
-    ],
-    "manacost": "",
-    "imageurl": "https://cards.scryfall.io/normal/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1783927337"
-  },
-  {
-    "id": "7a51472c-b61f-4d31-8753-a9ec90d12889",
-    "name": "The War Doctor",
-    "color": [
-      "R",
-      "W"
-    ],
-    "manacost": "{2}{R}{W}",
-    "imageurl": "https://cards.scryfall.io/normal/front/7/a/7a51472c-b61f-4d31-8753-a9ec90d12889.jpg?1783914620"
-  },
-  {
-    "id": "9a1ee042-6713-4e9e-9901-9b94d99d33f1",
-    "name": "Clara Oswald",
-    "color": [
-      "W"
-    ],
-    "manacost": "{6}",
-    "imageurl": "https://cards.scryfall.io/normal/front/9/a/9a1ee042-6713-4e9e-9901-9b94d99d33f1.jpg?1783914685"
+    "imageurl": "https://cards.scryfall.io/normal/front/c/a/caa3e9e4-e1d9-4896-9a66-493e7446aca0.jpg?1785759174"
   },
   {
     "id": "ed7b2361-97c6-49e2-bf0b-4770f4ffe2f0",
@@ -293,83 +402,12 @@
     "imageurl": "https://cards.scryfall.io/normal/front/e/d/ed7b2361-97c6-49e2-bf0b-4770f4ffe2f0.jpg?1783903624"
   },
   {
-    "id": "1925dc45-4dee-4772-aa16-3b4ca54be6c7",
-    "name": "Grist, the Hunger Tide",
-    "color": [
-      "B",
-      "G"
-    ],
-    "manacost": "{1}{B}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/1/9/1925dc45-4dee-4772-aa16-3b4ca54be6c7.jpg?1783909593"
-  },
-  {
-    "id": "db3b4f73-e241-4d60-a877-25327092c291",
-    "name": "Aveline de Grandpre",
-    "color": [
-      "G"
-    ],
-    "manacost": "{2}{G}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/d/b/db3b4f73-e241-4d60-a877-25327092c291.jpg?1783910976"
-  },
-  {
-    "id": "f588fa50-7cc5-41ba-90df-2d252eb5c785",
-    "name": "Blech, Loafing Pest",
-    "color": [
-      "B",
-      "G"
-    ],
-    "manacost": "{1}{B}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/f/5/f588fa50-7cc5-41ba-90df-2d252eb5c785.jpg?1783903648"
-  },
-  {
-    "id": "2e261489-8dde-4594-8868-69f432f03d03",
-    "name": "Betor, Ancestor's Voice",
-    "color": [
-      "B",
-      "G",
-      "W"
-    ],
-    "manacost": "{2}{W}{B}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/2/e/2e261489-8dde-4594-8868-69f432f03d03.jpg?1783907191"
-  },
-  {
-    "id": "6a5d8fad-2ffd-4645-8c49-907999b6cecf",
-    "name": "Smaug the Magnificent",
+    "id": "c62990d7-a337-4fc3-859c-63bc1dade1b9",
+    "name": "Zurzoth, Chaos Rider",
     "color": [
       "R"
     ],
-    "manacost": "{2}{R}{R}",
-    "imageurl": "https://cards.scryfall.io/normal/front/6/a/6a5d8fad-2ffd-4645-8c49-907999b6cecf.jpg?1783902784"
-  },
-  {
-    "id": "c133a860-7b8d-485d-b9a2-bf8ae3a68f47",
-    "name": "Scriv, the Obligator",
-    "color": [
-      "B",
-      "W"
-    ],
-    "manacost": "{2}{W}{B}",
-    "imageurl": "https://cards.scryfall.io/normal/front/c/1/c133a860-7b8d-485d-b9a2-bf8ae3a68f47.jpg?1783903867"
-  },
-  {
-    "id": "4b68bc46-5591-44dd-becc-eca154066925",
-    "name": "Abomination of Llanowar",
-    "color": [
-      "B",
-      "G"
-    ],
-    "manacost": "{1}{B}{G}",
-    "imageurl": "https://cards.scryfall.io/normal/front/4/b/4b68bc46-5591-44dd-becc-eca154066925.jpg?1783928307"
-  },
-  {
-    "id": "f90eb8ef-ad70-4d6c-9958-e6153f8599bc",
-    "name": "G'raha Tia, Scion Reborn",
-    "color": [
-      "B",
-      "U",
-      "W"
-    ],
-    "manacost": "{W}{U}{B}",
-    "imageurl": "https://cards.scryfall.io/normal/front/f/9/f90eb8ef-ad70-4d6c-9958-e6153f8599bc.jpg?1783906373"
+    "manacost": "{2}{R}",
+    "imageurl": "https://cards.scryfall.io/normal/front/c/6/c62990d7-a337-4fc3-859c-63bc1dade1b9.jpg?1783923255"
   }
 ]
