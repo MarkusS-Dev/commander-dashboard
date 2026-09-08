@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getLocalAuthEmail, isLocalAuthBypassEnabled } from "./localAuth";
+import { fetchJsonCached } from "@/lib/client/fetchCache";
 
 export type AuthState =
 	| { status: "loading" }
@@ -19,25 +20,27 @@ export function useAuth(): AuthState {
 		if (isLocalAuthBypassEnabled())
 			return;
 
-		check();
+		async function check() {
+			type AuthMeResponse = {
+				authenticated?: boolean;
+				email?: string;
+			};
+
+			try {
+				const data = await fetchJsonCached<AuthMeResponse>("/api/auth/me", { ttlMs: 15_000 });
+				if (!data.authenticated || typeof data.email !== "string" || !data.email) {
+					setState({ status: "unauthenticated" });
+					return;
+				}
+
+				setState({ status: "authenticated", email: data.email });
+			} catch {
+				setState({ status: "unauthenticated" });
+			}
+		}
+
+		void check();
 	}, []);
-
-	async function check() {
-		const res = await fetch("/api/auth/me");
-		if (!res.ok) {
-			setState({ status: "unauthenticated" });
-			return;
-		}
-
-		const data = await res.json();
-
-		if (!data.authenticated) {
-			setState({ status: "unauthenticated" });
-			return;
-		}
-
-		setState({ status: "authenticated", email: data.email });
-	}
 
 	return state;
 }

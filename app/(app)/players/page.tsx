@@ -1,9 +1,12 @@
 import PlayersList from "./playersList";
+import { loadPlayers } from "@/lib/github/playerRepository";
 
-export default function PlayersPage() {
+export default async function PlayersPage() {
+	const players = await loadPlayers();
+
 	return (
 		<main className="flex justify-center">
-			<PlayersList />
+			<PlayersList initialPlayers={players} />
 		</main>
 	);
 }

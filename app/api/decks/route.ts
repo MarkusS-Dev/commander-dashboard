@@ -28,7 +28,11 @@ function normalizeColors(value: unknown): string[] | undefined {
 
 export async function GET() {
 	const decks = await loadDecks();
-	return Response.json(decks);
+	return Response.json(decks, {
+		headers: {
+			"Cache-Control": "public, max-age=30, stale-while-revalidate=120",
+		},
+	});
 }
 
 export async function POST(req: Request) {

@@ -22,13 +22,25 @@ export async function GET(req: Request) {
 			const missingIds = commanderIds.filter(id => !foundIds.has(String(id)));
 
 			if (missingIds.length === 0)
-				return Response.json(fromDecks);
+				return Response.json(fromDecks, {
+					headers: {
+						"Cache-Control": "public, max-age=30, stale-while-revalidate=120",
+					},
+				});
 
 			const hydratedMissing = await resolveCommandersById(missingIds);
-			return Response.json([...fromDecks, ...hydratedMissing]);
+			return Response.json([...fromDecks, ...hydratedMissing], {
+				headers: {
+					"Cache-Control": "public, max-age=30, stale-while-revalidate=120",
+				},
+			});
 		}
 
-		return Response.json(await loadCommanderCatalog());
+		return Response.json(await loadCommanderCatalog(), {
+			headers: {
+				"Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+			},
+		});
 	} catch (e) {
 		console.error(e);
 		return Response.json([], { status: 500 });

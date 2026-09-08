@@ -3,6 +3,10 @@ import { getAllowedEmails } from "@/lib/auth/allowedEmails";
 import { isLocalAuthBypassEnabled } from "@/lib/auth/localAuth";
 import { signOtpToken } from "@/lib/auth/otpToken";
 import { sendLoginCode } from "@/lib/email/sendLoginCode";
+import crypto from "node:crypto";
+
+const REQUEST_COOLDOWN_MS = 60_000;
+const lastCodeRequestByEmail = new Map<string, number>();
 
 export async function POST(req: Request) {
 	if (isLocalAuthBypassEnabled()) {
@@ -24,12 +28,17 @@ export async function POST(req: Request) {
 		return Response.json({ ok: true });
 	}
 
+	const lastRequestAt = lastCodeRequestByEmail.get(normalized) ?? 0;
+	if (Date.now() - lastRequestAt < REQUEST_COOLDOWN_MS)
+		return Response.json({ ok: true });
+
 	// Generate 6-digit code
-	const code = Math.floor(100000 + Math.random() * 900000).toString();
+	const code = crypto.randomInt(100000, 1_000_000).toString();
 	const expiresAtUnixMs = Date.now() + 10 * 60 * 1000;
 
 	// Send email
 	await sendLoginCode(normalized, code);
+	lastCodeRequestByEmail.set(normalized, Date.now());
 
 	const cookieStore = await cookies();
 	cookieStore.set("otp_challenge", signOtpToken({

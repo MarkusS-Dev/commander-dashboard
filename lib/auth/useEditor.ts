@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { isLocalAuthBypassEnabled } from "./localAuth";
+import { fetchJsonCached } from "@/lib/client/fetchCache";
 
 export function useEditor() {
 	const [isEditor, setIsEditor] = useState(() => isLocalAuthBypassEnabled());
@@ -15,9 +16,14 @@ export function useEditor() {
 
 		async function check() {
 			try {
-				const res = await fetch("/api/auth/me");
+				const data = await fetchJsonCached<{ authenticated?: boolean }>("/api/auth/me", {
+					ttlMs: 15_000,
+				});
 				if (!cancelled)
-					setIsEditor(res.ok);
+					setIsEditor(Boolean(data.authenticated));
+			} catch {
+				if (!cancelled)
+					setIsEditor(false);
 			} finally {
 				if (!cancelled)
 					setReady(true);

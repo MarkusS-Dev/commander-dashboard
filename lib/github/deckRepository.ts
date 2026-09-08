@@ -1,5 +1,6 @@
 import { readJson, writeJson } from "./client";
 import { Deck } from "@/lib/domain/deckRules";
+import type { CommanderSummary } from "./commanderIndexRepository";
 
 const PATH = "data/decks.json";
 
@@ -16,13 +17,6 @@ type ScryfallCard = {
 			normal?: string;
 		};
 	}>;
-};
-
-type CommanderSummary = {
-	id: string;
-	name: string;
-	colors: string[];
-	imageUrl?: string;
 };
 
 function commanderImageUrl(card: ScryfallCard): string | undefined {
@@ -46,6 +40,7 @@ async function fetchCommanderById(id: string): Promise<CommanderSummary | null> 
 			id: card.id,
 			name: card.name,
 			colors: card.colors ?? [],
+			manaCost: card.mana_cost ?? "",
 			imageUrl: commanderImageUrl(card),
 		};
 	} catch {
@@ -142,6 +137,7 @@ export async function resolveDeckCommandersById(
 				id: commanderAId,
 				name: deck.commanderAName ?? "",
 				colors: deck.commanderAColors ?? [],
+				manaCost: "",
 				imageUrl: deck.commanderAImageUrl,
 			});
 		}
@@ -152,6 +148,7 @@ export async function resolveDeckCommandersById(
 				id: commanderBId,
 				name: deck.commanderBName ?? "",
 				colors: deck.commanderBColors ?? [],
+				manaCost: "",
 				imageUrl: deck.commanderBImageUrl,
 			});
 		}

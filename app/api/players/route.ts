@@ -3,7 +3,11 @@ import { requireEditorSession } from "@/lib/auth/session";
 
 export async function GET() {
 	const players = await loadPlayers();
-	return Response.json(players);
+	return Response.json(players, {
+		headers: {
+			"Cache-Control": "public, max-age=30, stale-while-revalidate=120",
+		},
+	});
 }
 
 export async function POST(req: Request) {

@@ -6,6 +6,10 @@ import ReadOnlyBanner from "@/components/ReadOnlyBanner";
 import CommanderSearchField from "@/components/CommanderSearchField";
 import type { CommanderSummary } from "@/lib/github/commanderIndexRepository";
 import { requiresCommanderColorChoice } from "@/lib/domain/specialCommanderColorChoices";
+import {
+	fetchJsonCached,
+	invalidateFetchCacheByPrefix,
+} from "@/lib/client/fetchCache";
 
 type Player = {
 	id: number;
@@ -35,6 +39,12 @@ type ColorChoiceState = {
 	slot: CommanderSlot;
 	commanderName: string;
 } | null;
+
+type DecksListProps = {
+	initialPlayers?: Player[];
+	initialDecks?: Deck[];
+	initialCommanders?: CommanderSummary[];
+};
 
 const COLOR_OPTIONS = [
 	{ label: "White", value: "W" },
@@ -92,10 +102,15 @@ function colorCombinationName(colors: string[]): string {
 	return COLOR_COMBINATION_NAMES[key] ?? key;
 }
 
-export default function DecksList() {
-	const [players, setPlayers] = useState<Player[]>([]);
-	const [commanders, setCommanders] = useState<CommanderSummary[]>([]);
-	const [decks, setDecks] = useState<Deck[]>([]);
+export default function DecksList({
+	initialPlayers,
+	initialDecks,
+	initialCommanders,
+}: DecksListProps) {
+	const hasInitialData = initialPlayers !== undefined && initialDecks !== undefined && initialCommanders !== undefined;
+	const [players, setPlayers] = useState<Player[]>(initialPlayers ?? []);
+	const [commanders, setCommanders] = useState<CommanderSummary[]>(initialCommanders ?? []);
+	const [decks, setDecks] = useState<Deck[]>(initialDecks ?? []);
 	const [createDeckOpen, setCreateDeckOpen] = useState(false);
 	const [editDeckOpen, setEditDeckOpen] = useState(false);
 	const [commandersLoading, setCommandersLoading] = useState(false);
@@ -129,8 +144,9 @@ export default function DecksList() {
 	const { isEditor } = useEditor();
 
 	useEffect(() => {
-		void loadAll();
-	}, []);
+		if (!hasInitialData)
+			void loadAll();
+	}, [hasInitialData]);
 
 	async function loadAll() {
 		const [loadedPlayers, loadedDecks] = await Promise.all([
@@ -159,9 +175,10 @@ export default function DecksList() {
 		}
 
 		try {
-			const res = await fetch(`/api/commanders?ids=${commanderIds.map(id => encodeURIComponent(id)).join(",")}`);
-			const text = await res.text();
-			const loadedCommanders: CommanderSummary[] = text ? JSON.parse(text) : [];
+			const loadedCommanders = await fetchJsonCached<CommanderSummary[]>(
+				`/api/commanders?ids=${commanderIds.map(id => encodeURIComponent(id)).join(",")}`,
+				{ ttlMs: 30_000 }
+			);
 			setCommanders(loadedCommanders);
 		} catch {
 			setCommanders([]);
@@ -169,15 +186,11 @@ export default function DecksList() {
 	}
 
 	async function loadPlayers() {
-		const res = await fetch("/api/players");
-		const text = await res.text();
-		return text ? JSON.parse(text) : [];
+		return fetchJsonCached<Player[]>("/api/players", { ttlMs: 30_000 });
 	}
 
 	async function loadDecks() {
-		const res = await fetch("/api/decks");
-		const text = await res.text();
-		return text ? JSON.parse(text) : [];
+		return fetchJsonCached<Deck[]>("/api/decks", { ttlMs: 30_000 });
 	}
 
 	async function loadCommanders() {
@@ -186,9 +199,9 @@ export default function DecksList() {
 
 		setCommandersLoading(true);
 		try {
-			const res = await fetch("/api/commanders");
-			const text = await res.text();
-			const loadedCommanders: CommanderSummary[] = text ? JSON.parse(text) : [];
+			const loadedCommanders = await fetchJsonCached<CommanderSummary[]>("/api/commanders", {
+				ttlMs: 5 * 60_000,
+			});
 			setCommanders(loadedCommanders);
 			setCommandersLoaded(true);
 		} finally {
@@ -381,6 +394,13 @@ export default function DecksList() {
 			return;
 		}
 
+		invalidateFetchCacheByPrefix([
+			"/api/decks",
+			"/api/games",
+			"/api/commanders",
+			"/api/bootstrap",
+		]);
+
 		setName("");
 		setPlayerId("");
 		setCommanderAId("");
@@ -409,6 +429,13 @@ export default function DecksList() {
 			alert(await res.text());
 			return;
 		}
+
+		invalidateFetchCacheByPrefix([
+			"/api/decks",
+			"/api/games",
+			"/api/commanders",
+			"/api/bootstrap",
+		]);
 
 		await loadAll();
 	}
@@ -478,6 +505,13 @@ export default function DecksList() {
 			return;
 		}
 
+		invalidateFetchCacheByPrefix([
+			"/api/decks",
+			"/api/games",
+			"/api/commanders",
+			"/api/bootstrap",
+		]);
+
 		await loadAll();
 		closeEditDeck();
 	}
@@ -544,6 +578,7 @@ export default function DecksList() {
 										</select>
 
 										<CommanderSearchField
+											key={`create-a-${commanderAId}`}
 											label="First commander"
 											selectedId={commanderAId}
 											selectedName={commanderAName}
@@ -552,6 +587,7 @@ export default function DecksList() {
 										/>
 
 										<CommanderSearchField
+											key={`create-b-${commanderBId}`}
 											label="Optional second commander"
 											selectedId={commanderBId}
 											selectedName={commanderBName}
@@ -664,6 +700,7 @@ export default function DecksList() {
 										</select>
 
 										<CommanderSearchField
+											key={`edit-a-${editCommanderAId}`}
 											label="First commander"
 											selectedId={editCommanderAId}
 											selectedName={editCommanderAName}
@@ -672,6 +709,7 @@ export default function DecksList() {
 										/>
 
 										<CommanderSearchField
+											key={`edit-b-${editCommanderBId}`}
 											label="Optional second commander"
 											selectedId={editCommanderBId}
 											selectedName={editCommanderBName}

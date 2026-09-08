@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { useEditor } from "@/lib/auth/useEditor";
 import ReadOnlyBanner from "@/components/ReadOnlyBanner";
+import {
+	fetchJsonCached,
+	invalidateFetchCacheByPrefix,
+} from "@/lib/client/fetchCache";
 
 type Player = {
 	id: number;
@@ -10,8 +14,13 @@ type Player = {
 	color: string;
 };
 
-export default function PlayersList() {
-	const [players, setPlayers] = useState<Player[]>([]);
+type PlayersListProps = {
+	initialPlayers?: Player[];
+};
+
+export default function PlayersList({ initialPlayers }: PlayersListProps) {
+	const hasInitialData = initialPlayers !== undefined;
+	const [players, setPlayers] = useState<Player[]>(initialPlayers ?? []);
 
 	const [createOpen, setCreateOpen] = useState(false);
 	const [newName, setNewName] = useState("");
@@ -29,13 +38,12 @@ export default function PlayersList() {
 	const { isEditor } = useEditor();
 
 	useEffect(() => {
-		void loadPlayers();
-	}, []);
+		if (!hasInitialData)
+			void loadPlayers();
+	}, [hasInitialData]);
 
 	async function loadPlayers() {
-		const res = await fetch("/api/players");
-		const text = await res.text();
-		const loadedPlayers: Player[] = text ? JSON.parse(text) : [];
+		const loadedPlayers = await fetchJsonCached<Player[]>("/api/players", { ttlMs: 30_000 });
 		setPlayers(loadedPlayers);
 	}
 
@@ -87,6 +95,7 @@ export default function PlayersList() {
 
 			const created: Player = await res.json();
 			setPlayers(prev => [...prev, created]);
+			invalidateFetchCacheByPrefix(["/api/players", "/api/bootstrap"]);
 			closeCreatePopup();
 		} finally {
 			setAddingPlayer(false);
@@ -124,6 +133,7 @@ export default function PlayersList() {
 
 			const saved: Player = await res.json();
 			setPlayers(prev => prev.map(p => (p.id === saved.id ? saved : p)));
+			invalidateFetchCacheByPrefix(["/api/players", "/api/bootstrap"]);
 			closeEditPopup();
 		} finally {
 			setSavingPlayer(false);
@@ -154,6 +164,7 @@ export default function PlayersList() {
 			}
 
 			setPlayers(prev => prev.filter(player => player.id !== editingPlayerId));
+			invalidateFetchCacheByPrefix(["/api/players", "/api/bootstrap"]);
 			closeEditPopup();
 		} finally {
 			setDeletingPlayer(false);

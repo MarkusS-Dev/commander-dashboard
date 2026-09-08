@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { CommanderSummary } from "@/lib/github/commanderIndexRepository";
 
 type CommanderSearchFieldProps = {
@@ -21,11 +21,6 @@ export default function CommanderSearchField({
 	excludedIds = [],
 }: CommanderSearchFieldProps) {
 	const [query, setQuery] = useState(selectedName);
-	const excludedKey = excludedIds.join("\u0000");
-
-	useEffect(() => {
-		setQuery(selectedName);
-	}, [selectedId, selectedName]);
 
 	const results = useMemo(() => {
 		const trimmed = query.trim().toLowerCase();
@@ -38,7 +33,7 @@ export default function CommanderSearchField({
 				commander.name.toLowerCase().includes(trimmed)
 			)
 			.slice(0, 12);
-	}, [commanders, excludedKey, query]);
+	}, [commanders, excludedIds, query]);
 
 	function chooseCommander(commander: CommanderSummary) {
 		onSelect(commander);

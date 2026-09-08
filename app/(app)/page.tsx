@@ -10,9 +10,15 @@ import {
 	CategoryScale,
 	Legend,
 	Tooltip,
+	type ChartData,
 } from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
 import PlayerSelector, { PlayerOption } from "@/components/PlayerSelector";
+import { fetchJsonCached } from "@/lib/client/fetchCache";
+import {
+	DEFAULT_LAND_ART_BY_COLOR,
+	type ManaColor,
+} from "@/lib/scryfall/landArt";
 
 type Player = {
 	id: number;
@@ -61,7 +67,13 @@ type ChartPoint = {
 	games: PointGame[];
 };
 
-type ManaColor = "White" | "Blue" | "Black" | "Red" | "Green";
+type DashboardBootstrapResponse = {
+	players: Player[];
+	decks: Deck[];
+	games: Game[];
+	commanders: CommanderSummary[];
+	landArtByColor: Record<ManaColor, string>;
+};
 
 const SYMBOL_TO_MANA_COLOR: Record<string, ManaColor | undefined> = {
 	W: "White",
@@ -70,75 +82,6 @@ const SYMBOL_TO_MANA_COLOR: Record<string, ManaColor | undefined> = {
 	R: "Red",
 	G: "Green",
 };
-
-const DEFAULT_LAND_ART_BY_COLOR: Record<ManaColor, string> = {
-	White: "",
-	Blue: "",
-	Black: "",
-	Red: "",
-	Green: "",
-};
-
-type ScryfallCardResult = {
-	image_uris?: {
-		normal?: string;
-	};
-	card_faces?: Array<{
-		image_uris?: {
-			normal?: string;
-		};
-	}>;
-};
-
-type ScryfallSearchResponse = {
-	data?: ScryfallCardResult[];
-};
-
-function scryfallImageUrl(card: ScryfallCardResult) {
-	return card.image_uris?.normal ?? card.card_faces?.[0]?.image_uris?.normal ?? "";
-}
-
-async function fetchLatestBasicLandArt(cardName: string): Promise<string> {
-	const query = `!\"${cardName}\" t:basic unique:prints`;
-	const url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=released&dir=desc`;
-	const res = await fetch(url, {
-		headers: {
-			Accept: "application/json",
-		},
-	});
-
-	if (!res.ok)
-		return "";
-
-	const data = (await res.json()) as ScryfallSearchResponse;
-	const first = data.data?.[0];
-	if (!first)
-		return "";
-
-	return scryfallImageUrl(first);
-}
-
-async function fetchLatestLandArtByColor(): Promise<Record<ManaColor, string>> {
-	const entries: Array<[ManaColor, string]> = [
-		["White", "Plains"],
-		["Blue", "Island"],
-		["Black", "Swamp"],
-		["Red", "Mountain"],
-		["Green", "Forest"],
-	];
-
-	const images = await Promise.all(
-		entries.map(async ([color, cardName]) => [color, await fetchLatestBasicLandArt(cardName)] as const)
-	);
-
-	return {
-		White: images.find(([color]) => color === "White")?.[1] ?? "",
-		Blue: images.find(([color]) => color === "Blue")?.[1] ?? "",
-		Black: images.find(([color]) => color === "Black")?.[1] ?? "",
-		Red: images.find(([color]) => color === "Red")?.[1] ?? "",
-		Green: images.find(([color]) => color === "Green")?.[1] ?? "",
-	};
-}
 
 const winMarkerPlugin = {
 	id: "winMarkerPlugin",
@@ -204,7 +147,7 @@ export default function DashboardPage() {
 	const [games, setGames] = useState<Game[]>([]);
 	const [commandersById, setCommandersById] = useState<Record<string, CommanderSummary>>({});
 	const [landArtByColor, setLandArtByColor] = useState<Record<ManaColor, string>>(DEFAULT_LAND_ART_BY_COLOR);
-	const [chartData, setChartData] = useState<any>(null);
+	const [chartData, setChartData] = useState<ChartData<"line"> | null>(null);
 	const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -212,43 +155,22 @@ export default function DashboardPage() {
 	}, []);
 
 	async function loadData() {
-		const latestLandArt = await fetchLatestLandArtByColor().catch(() => DEFAULT_LAND_ART_BY_COLOR);
-		setLandArtByColor(latestLandArt);
+		const data = await fetchJsonCached<DashboardBootstrapResponse>("/api/bootstrap", {
+			ttlMs: 30_000,
+		});
+		const loadedPlayers = data.players;
+		const loadedDecks = data.decks;
+		const loadedGames = data.games;
+		const loadedCommanders = data.commanders;
 
-		const [loadedPlayers, loadedDecks, loadedGames]: [Player[], Deck[], Game[]] =
-			await Promise.all([
-				fetch("/api/players").then(response => response.json()),
-				fetch("/api/decks").then(response => response.json()),
-				fetch("/api/games").then(response => response.json()),
-			]);
+		setLandArtByColor(data.landArtByColor ?? DEFAULT_LAND_ART_BY_COLOR);
 
 		setPlayers(loadedPlayers);
 		setDecks(loadedDecks);
 		setGames(loadedGames);
-
-		const commanderIds = Array.from(
-			new Set(
-				loadedDecks
-					.flatMap(deck => [deck.commanderAId, deck.commanderBId])
-					.filter((id): id is string | number => id != null && id !== "")
-					.map(id => String(id))
-			)
+		setCommandersById(
+			Object.fromEntries(loadedCommanders.map(commander => [commander.id, commander]))
 		);
-
-		if (commanderIds.length > 0) {
-			try {
-				const response = await fetch(
-					`/api/commanders?ids=${commanderIds.map(id => encodeURIComponent(id)).join(",")}`
-				);
-				const text = await response.text();
-				const commanders: CommanderSummary[] = text ? JSON.parse(text) : [];
-				setCommandersById(
-					Object.fromEntries(commanders.map(commander => [commander.id, commander]))
-				);
-			} catch {
-				setCommandersById({});
-			}
-		}
 
 		const sortedGames = [...loadedGames].sort(
 			(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -357,7 +279,7 @@ export default function DashboardPage() {
 		return <div className="text-center">Loading…</div>;
 
 	const allPointValues: number[] = chartData.datasets.flatMap(
-		(dataset: { data: (number | null)[] }) =>
+		dataset =>
 			dataset.data.filter((value): value is number => typeof value === "number")
 	);
 

@@ -4,6 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useEditor } from "@/lib/auth/useEditor";
 import ReadOnlyBanner from "@/components/ReadOnlyBanner";
 import type { CommanderSummary } from "@/lib/github/commanderIndexRepository";
+import {
+	fetchJsonCached,
+	invalidateFetchCacheByPrefix,
+} from "@/lib/client/fetchCache";
 
 type Player = {
 	id: number;
@@ -26,13 +30,30 @@ type Game = {
 	notes?: string;
 };
 
-export default function GamesList() {
-	const [players, setPlayers] = useState<Player[]>([]);
+type GamesListProps = {
+	initialPlayers?: Player[];
+	initialDecks?: Deck[];
+	initialGames?: Game[];
+	initialCommanders?: CommanderSummary[];
+};
+
+export default function GamesList({
+	initialPlayers,
+	initialDecks,
+	initialGames,
+	initialCommanders,
+}: GamesListProps) {
+	const hasInitialData = initialPlayers !== undefined
+		&& initialDecks !== undefined
+		&& initialGames !== undefined
+		&& initialCommanders !== undefined;
+	const [players, setPlayers] = useState<Player[]>(initialPlayers ?? []);
 	const [commandersById, setCommandersById] = useState<
 		Record<string, CommanderSummary>
-	>({});
-	const [decks, setDecks] = useState<Deck[]>([]);
-	const [games, setGames] = useState<Game[]>([]);
+	>(() => Object.fromEntries((initialCommanders ?? []).map(commander => [commander.id, commander])));
+	const [decks, setDecks] = useState<Deck[]>(initialDecks ?? []);
+	const [games, setGames] = useState<Game[]>(initialGames ?? []);
+	const [hasLoadedData, setHasLoadedData] = useState(hasInitialData);
 
 	const [logGameOpen, setLogGameOpen] = useState(false);
 	const [logGameLoading, setLogGameLoading] = useState(false);
@@ -49,8 +70,9 @@ export default function GamesList() {
 	const { isEditor } = useEditor();
 
 	useEffect(() => {
-		void loadAll();
-	}, []);
+		if (!hasInitialData)
+			void loadAll();
+	}, [hasInitialData]);
 
 	useEffect(() => {
 		setSeatedDeckIds(prev => {
@@ -74,24 +96,19 @@ export default function GamesList() {
 		setDecks(loadedDecks);
 		setGames(loadedGames);
 		await loadCommandersForDecks(loadedDecks);
+		setHasLoadedData(true);
 	}
 
 	async function loadPlayers() {
-		const res = await fetch("/api/players");
-		const text = await res.text();
-		return text ? JSON.parse(text) : [];
+		return fetchJsonCached<Player[]>("/api/players", { ttlMs: 30_000 });
 	}
 
 	async function loadDecks() {
-		const res = await fetch("/api/decks");
-		const text = await res.text();
-		return text ? JSON.parse(text) : [];
+		return fetchJsonCached<Deck[]>("/api/decks", { ttlMs: 30_000 });
 	}
 
 	async function loadGames() {
-		const res = await fetch("/api/games");
-		const text = await res.text();
-		return text ? JSON.parse(text) : [];
+		return fetchJsonCached<Game[]>("/api/games", { ttlMs: 30_000 });
 	}
 
 	async function loadCommandersForDecks(loadedDecks: Deck[]) {
@@ -108,11 +125,10 @@ export default function GamesList() {
 			return;
 		}
 
-		const res = await fetch(
-			`/api/commanders?ids=${ids.map(id => encodeURIComponent(String(id))).join(",")}`
+		const commanders = await fetchJsonCached<CommanderSummary[]>(
+			`/api/commanders?ids=${ids.map(id => encodeURIComponent(String(id))).join(",")}`,
+			{ ttlMs: 30_000 }
 		);
-		const text = await res.text();
-		const commanders: CommanderSummary[] = text ? JSON.parse(text) : [];
 		setCommandersById(
 			Object.fromEntries(commanders.map(commander => [commander.id, commander]))
 		);
@@ -145,6 +161,11 @@ export default function GamesList() {
 	}
 
 	async function openLogGame() {
+		if (hasLoadedData) {
+			setLogGameOpen(true);
+			return;
+		}
+
 		setLogGameLoading(true);
 		try {
 			const [loadedPlayers, loadedDecks, loadedGames] = await Promise.all([
@@ -157,6 +178,7 @@ export default function GamesList() {
 			setDecks(loadedDecks);
 			setGames(loadedGames);
 			await loadCommandersForDecks(loadedDecks);
+			setHasLoadedData(true);
 			setLogGameOpen(true);
 		} finally {
 			setLogGameLoading(false);
@@ -206,6 +228,14 @@ export default function GamesList() {
 			setError(await res.text());
 			return;
 		}
+
+		invalidateFetchCacheByPrefix([
+			"/api/games",
+			"/api/decks",
+			"/api/players",
+			"/api/commanders",
+			"/api/bootstrap",
+		]);
 
 		setNotes("");
 		setWinnerDeckId("");

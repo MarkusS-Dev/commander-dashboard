@@ -5,7 +5,11 @@ import { requireEditorSession } from "@/lib/auth/session";
 
 export async function GET() {
 	const games = await loadGames();
-	return Response.json(games);
+	return Response.json(games, {
+		headers: {
+			"Cache-Control": "public, max-age=30, stale-while-revalidate=120",
+		},
+	});
 }
 
 export async function POST(req: Request) {
@@ -22,6 +26,12 @@ export async function POST(req: Request) {
 	if (deckIds.length > 7)
 		return new Response("Maximum 7 decks allowed", { status: 400 });
 
+	if (!deckIds.every(id => typeof id === "number" && Number.isInteger(id)))
+		return new Response("deckIds must contain integer deck ids", { status: 400 });
+
+	if (new Set(deckIds).size !== deckIds.length)
+		return new Response("A deck can only occupy one seat", { status: 400 });
+
 	if (!date)
 		return new Response("Date is required", { status: 400 });
 
@@ -32,8 +42,8 @@ export async function POST(req: Request) {
 		if (!deckIdSet.has(id))
 			return new Response(`Deck ${id} not found`, { status: 400 });
 
-	if (!deckIdSet.has(winnerDeckId))
-		return new Response("Winner deck not found", { status: 400 });
+	if (!deckIds.includes(winnerDeckId))
+		return new Response("Winner must be one of the participating decks", { status: 400 });
 
 	const games = await loadGames();
 	const game = createGame(games, deckIds, winnerDeckId, date, notes);
