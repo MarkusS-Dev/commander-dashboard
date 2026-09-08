@@ -14,6 +14,9 @@
     "id": 3,
     "name": "Birdemic",
     "playerId": 1,
+    "commanderAId": "4dc2d415-fdf7-4f2d-95d0-a793ffc26491",
+    "commanderAName": "Rendmaw, Creaking Nest",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/d/4dc2d415-fdf7-4f2d-95d0-a793ffc26491.jpg?1783909662",
     "commanderAColors": [
       "B",
       "G"
@@ -359,6 +362,90 @@
     "commanderAColors": [
       "B",
       "G"
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Aveline de Grandpre",
+    "playerId": 3,
+    "commanderAId": "db3b4f73-e241-4d60-a877-25327092c291",
+    "commanderAName": "Aveline de Grandpre",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/d/b/db3b4f73-e241-4d60-a877-25327092c291.jpg?1783910976",
+    "commanderAColors": [
+      "G"
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Blech, Loafing Pest",
+    "playerId": 2,
+    "commanderAId": "f588fa50-7cc5-41ba-90df-2d252eb5c785",
+    "commanderAName": "Blech, Loafing Pest",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/f/5/f588fa50-7cc5-41ba-90df-2d252eb5c785.jpg?1783903648",
+    "commanderAColors": [
+      "B",
+      "G"
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Betor, Ancestor's Voice",
+    "playerId": 3,
+    "commanderAId": "2e261489-8dde-4594-8868-69f432f03d03",
+    "commanderAName": "Betor, Ancestor's Voice",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/2/e/2e261489-8dde-4594-8868-69f432f03d03.jpg?1783907191",
+    "commanderAColors": [
+      "B",
+      "G",
+      "W"
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Smaug the Magnificent",
+    "playerId": 5,
+    "commanderAId": "6a5d8fad-2ffd-4645-8c49-907999b6cecf",
+    "commanderAName": "Smaug the Magnificent",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/6/a/6a5d8fad-2ffd-4645-8c49-907999b6cecf.jpg?1783902784",
+    "commanderAColors": [
+      "R"
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Scriv, the Obligator",
+    "playerId": 2,
+    "commanderAId": "c133a860-7b8d-485d-b9a2-bf8ae3a68f47",
+    "commanderAName": "Scriv, the Obligator",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/c/1/c133a860-7b8d-485d-b9a2-bf8ae3a68f47.jpg?1783903867",
+    "commanderAColors": [
+      "B",
+      "W"
+    ]
+  },
+  {
+    "id": 42,
+    "name": "Abomination of Llanowar",
+    "playerId": 3,
+    "commanderAId": "4b68bc46-5591-44dd-becc-eca154066925",
+    "commanderAName": "Abomination of Llanowar",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/4/b/4b68bc46-5591-44dd-becc-eca154066925.jpg?1783928307",
+    "commanderAColors": [
+      "B",
+      "G"
+    ]
+  },
+  {
+    "id": 43,
+    "name": "G'raha Tia, Scion Reborn",
+    "playerId": 5,
+    "commanderAId": "f90eb8ef-ad70-4d6c-9958-e6153f8599bc",
+    "commanderAName": "G'raha Tia, Scion Reborn",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/f/9/f90eb8ef-ad70-4d6c-9958-e6153f8599bc.jpg?1783906373",
+    "commanderAColors": [
+      "B",
+      "U",
+      "W"
     ]
   }
 ]
