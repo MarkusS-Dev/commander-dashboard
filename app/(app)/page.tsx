@@ -287,7 +287,7 @@ export default function DashboardPage() {
 				pointBorderColor,
 				pointHoverBackgroundColor: player.color,
 				pointHoverBorderColor: player.color,
-				spanGaps: false,
+				spanGaps: true,
 				fill: false,
 			};
 		});
