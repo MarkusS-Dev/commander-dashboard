@@ -348,5 +348,17 @@
       "B",
       "G"
     ]
+  },
+  {
+    "id": 36,
+    "name": "Grist, the Hunger Tide",
+    "playerId": 5,
+    "commanderAId": "1925dc45-4dee-4772-aa16-3b4ca54be6c7",
+    "commanderAName": "Grist, the Hunger Tide",
+    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/1/9/1925dc45-4dee-4772-aa16-3b4ca54be6c7.jpg?1783909593",
+    "commanderAColors": [
+      "B",
+      "G"
+    ]
   }
 ]
