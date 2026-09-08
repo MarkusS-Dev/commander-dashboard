@@ -360,17 +360,5 @@
       "B",
       "G"
     ]
-  },
-  {
-    "id": 37,
-    "name": "Witherbloom, the Balancer",
-    "playerId": 6,
-    "commanderAId": "ed7b2361-97c6-49e2-bf0b-4770f4ffe2f0",
-    "commanderAName": "Witherbloom, the Balancer",
-    "commanderAImageUrl": "https://cards.scryfall.io/normal/front/e/d/ed7b2361-97c6-49e2-bf0b-4770f4ffe2f0.jpg?1783903624",
-    "commanderAColors": [
-      "B",
-      "G"
-    ]
   }
 ]
