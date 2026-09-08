@@ -1,11 +1,15 @@
 export type ManaColor = "White" | "Blue" | "Black" | "Red" | "Green";
 
+function scryfallNamedImageUrl(cardName: string) {
+	return `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(cardName)}&format=image&version=normal`;
+}
+
 export const DEFAULT_LAND_ART_BY_COLOR: Record<ManaColor, string> = {
-	White: "",
-	Blue: "",
-	Black: "",
-	Red: "",
-	Green: "",
+	White: scryfallNamedImageUrl("Plains"),
+	Blue: scryfallNamedImageUrl("Island"),
+	Black: scryfallNamedImageUrl("Swamp"),
+	Red: scryfallNamedImageUrl("Mountain"),
+	Green: scryfallNamedImageUrl("Forest"),
 };
 
 type ScryfallCardResult = {
@@ -40,12 +44,12 @@ async function fetchLatestBasicLandArt(cardName: string): Promise<string> {
 	});
 
 	if (!res.ok)
-		return "";
+		return scryfallNamedImageUrl(cardName);
 
 	const data = (await res.json()) as ScryfallSearchResponse;
 	const first = data.data?.[0];
 	if (!first)
-		return "";
+		return scryfallNamedImageUrl(cardName);
 
 	return scryfallImageUrl(first);
 }
