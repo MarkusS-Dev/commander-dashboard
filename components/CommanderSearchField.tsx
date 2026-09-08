@@ -12,6 +12,17 @@ type CommanderSearchFieldProps = {
 	excludedIds?: string[];
 };
 
+function normalizeForSearch(text: string) {
+	return text
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.toLowerCase()
+		.replace(/['’`]/g, "")
+		.replace(/[^a-z0-9]+/g, " ")
+		.trim()
+		.replace(/\s+/g, " ");
+}
+
 export default function CommanderSearchField({
 	label,
 	selectedId,
@@ -22,18 +33,29 @@ export default function CommanderSearchField({
 }: CommanderSearchFieldProps) {
 	const [query, setQuery] = useState(selectedName);
 
+	const searchableCommanders = useMemo(
+		() => commanders.map(commander => ({
+			commander,
+			normalizedName: normalizeForSearch(commander.name),
+		})),
+		[commanders]
+	);
+
 	const results = useMemo(() => {
-		const trimmed = query.trim().toLowerCase();
-		if (!trimmed)
+		const normalizedQuery = normalizeForSearch(query);
+		if (!normalizedQuery)
 			return [] as CommanderSummary[];
 
-		return commanders
-			.filter(commander => !excludedIds.includes(commander.id))
-			.filter(commander =>
-				commander.name.toLowerCase().includes(trimmed)
+		const tokens = normalizedQuery.split(" ").filter(Boolean);
+
+		return searchableCommanders
+			.filter(({ commander }) => !excludedIds.includes(commander.id))
+			.filter(({ normalizedName }) =>
+				tokens.every(token => normalizedName.includes(token))
 			)
+			.map(({ commander }) => commander)
 			.slice(0, 12);
-	}, [commanders, excludedIds, query]);
+	}, [excludedIds, query, searchableCommanders]);
 
 	function chooseCommander(commander: CommanderSummary) {
 		onSelect(commander);
