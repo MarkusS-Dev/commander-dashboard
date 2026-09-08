@@ -89,6 +89,9 @@ const winMarkerPlugin = {
 		const context = chart.ctx;
 
 		chart.data.datasets.forEach((dataset, datasetIndex) => {
+			if (!chart.isDatasetVisible(datasetIndex))
+				return;
+
 			const pointMeta = (dataset as { pointMeta?: ChartPoint[] }).pointMeta ?? [];
 			const meta = chart.getDatasetMeta(datasetIndex);
 			const color = String(dataset.borderColor ?? dataset.backgroundColor ?? "#000000");
