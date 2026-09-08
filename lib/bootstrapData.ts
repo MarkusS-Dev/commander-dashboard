@@ -3,6 +3,10 @@ import type { Game } from "@/lib/domain/gameRules";
 import type { Player } from "@/lib/domain/playersRules";
 import { loadDecks, resolveDeckCommandersById } from "@/lib/github/deckRepository";
 import {
+	loadCommandersInDecks,
+	syncCommandersInDecksFromDecks,
+} from "@/lib/github/commandersInDecksRepository";
+import {
 	resolveCommandersById,
 	type CommanderSummary,
 } from "@/lib/github/commanderIndexRepository";
@@ -29,15 +33,23 @@ export async function loadCommandersForDecks(decks: Deck[]): Promise<CommanderSu
 	if (ids.length === 0)
 		return [];
 
-	const fromDecks = await resolveDeckCommandersById(ids);
-	const foundIds = new Set(fromDecks.map(commander => commander.id));
+	let fromDecks = await loadCommandersInDecks();
+	if (fromDecks.length === 0) {
+		fromDecks = await syncCommandersInDecksFromDecks(decks, { hydrate: false });
+	}
+
+	const fromDecksById = new Map(fromDecks.map(commander => [commander.id, commander]));
+	const ordered = ids
+		.map(id => fromDecksById.get(id))
+		.filter((commander): commander is CommanderSummary => commander != null);
+	const foundIds = new Set(ordered.map(commander => commander.id));
 	const missingIds = ids.filter(id => !foundIds.has(id));
 
 	if (missingIds.length === 0)
-		return fromDecks;
+		return ordered;
 
 	const hydratedMissing = await resolveCommandersById(missingIds);
-	return [...fromDecks, ...hydratedMissing];
+	return [...ordered, ...hydratedMissing];
 }
 
 export type DashboardBootstrapData = {

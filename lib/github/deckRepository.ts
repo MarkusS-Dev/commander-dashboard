@@ -1,6 +1,10 @@
 import { readJson, writeJson } from "./client";
 import { Deck } from "@/lib/domain/deckRules";
 import type { CommanderSummary } from "./commanderIndexRepository";
+import {
+	resolveCommandersInDecksById,
+	syncCommandersInDecksFromDecks,
+} from "./commandersInDecksRepository";
 
 const PATH = "data/decks.json";
 
@@ -118,59 +122,18 @@ export async function loadDecks(): Promise<Deck[]> {
 	if (!Array.isArray(decks))
 		return [];
 
-	return hydrateDeckCommanderData(decks);
+	const hydratedDecks = await hydrateDeckCommanderData(decks);
+	await syncCommandersInDecksFromDecks(hydratedDecks, { hydrate: false });
+	return hydratedDecks;
 }
 
 export async function resolveDeckCommandersById(
 	ids: Array<string | number>
 ): Promise<CommanderSummary[]> {
-	const decks = await readJson<Deck[]>(PATH);
-	if (!Array.isArray(decks) || ids.length === 0)
-		return [];
-
-	const lookup = new Map<string, CommanderSummary>();
-
-	for (const deck of decks) {
-		const commanderAId = deck.commanderAId != null ? String(deck.commanderAId) : "";
-		if (commanderAId && !lookup.has(commanderAId)) {
-			lookup.set(commanderAId, {
-				id: commanderAId,
-				name: deck.commanderAName ?? "",
-				colors: deck.commanderAColors ?? [],
-				manaCost: "",
-				imageUrl: deck.commanderAImageUrl,
-			});
-		}
-
-		const commanderBId = deck.commanderBId != null ? String(deck.commanderBId) : "";
-		if (commanderBId && !lookup.has(commanderBId)) {
-			lookup.set(commanderBId, {
-				id: commanderBId,
-				name: deck.commanderBName ?? "",
-				colors: deck.commanderBColors ?? [],
-				manaCost: "",
-				imageUrl: deck.commanderBImageUrl,
-			});
-		}
-	}
-
-	const resolved: CommanderSummary[] = [];
-	const seen = new Set<string>();
-
-	for (const rawId of ids) {
-		const id = String(rawId).trim();
-		if (!id || seen.has(id))
-			continue;
-
-		seen.add(id);
-		const commander = lookup.get(id);
-		if (commander)
-			resolved.push(commander);
-	}
-
-	return resolved;
+	return resolveCommandersInDecksById(ids);
 }
 
 export async function saveDecks(decks: Deck[]): Promise<void> {
 	await writeJson(PATH, decks);
+	await syncCommandersInDecksFromDecks(decks, { hydrate: true });
 }

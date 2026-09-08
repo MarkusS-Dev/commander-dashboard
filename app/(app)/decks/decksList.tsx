@@ -109,7 +109,8 @@ export default function DecksList({
 }: DecksListProps) {
 	const hasInitialData = initialPlayers !== undefined && initialDecks !== undefined && initialCommanders !== undefined;
 	const [players, setPlayers] = useState<Player[]>(initialPlayers ?? []);
-	const [commanders, setCommanders] = useState<CommanderSummary[]>(initialCommanders ?? []);
+	const [commandersInDecks, setCommandersInDecks] = useState<CommanderSummary[]>(initialCommanders ?? []);
+	const [commanderCatalog, setCommanderCatalog] = useState<CommanderSummary[]>([]);
 	const [decks, setDecks] = useState<Deck[]>(initialDecks ?? []);
 	const [createDeckOpen, setCreateDeckOpen] = useState(false);
 	const [editDeckOpen, setEditDeckOpen] = useState(false);
@@ -156,32 +157,18 @@ export default function DecksList({
 
 		setPlayers(loadedPlayers);
 		setDecks(loadedDecks);
-		await loadCommandersForDecks(loadedDecks);
+		await loadCommandersInDecks();
 	}
 
-	async function loadCommandersForDecks(loadedDecks: Deck[]) {
-		const commanderIds = Array.from(
-			new Set(
-				loadedDecks
-					.flatMap(deck => [deck.commanderAId, deck.commanderBId])
-					.filter((id): id is string | number => id != null && id !== "")
-					.map(id => String(id))
-			)
-		);
-
-		if (commanderIds.length === 0) {
-			setCommanders([]);
-			return;
-		}
-
+	async function loadCommandersInDecks() {
 		try {
 			const loadedCommanders = await fetchJsonCached<CommanderSummary[]>(
-				`/api/commanders?ids=${commanderIds.map(id => encodeURIComponent(id)).join(",")}`,
+				"/api/commanders-in-decks",
 				{ ttlMs: 30_000 }
 			);
-			setCommanders(loadedCommanders);
+			setCommandersInDecks(loadedCommanders);
 		} catch {
-			setCommanders([]);
+			setCommandersInDecks([]);
 		}
 	}
 
@@ -202,8 +189,11 @@ export default function DecksList({
 			const loadedCommanders = await fetchJsonCached<CommanderSummary[]>("/api/commanders", {
 				ttlMs: 5 * 60_000,
 			});
-			setCommanders(loadedCommanders);
+			setCommanderCatalog(loadedCommanders);
 			setCommandersLoaded(true);
+			setError(null);
+		} catch {
+			setError("Failed to load full commander catalog. Showing commanders already used in decks.");
 		} finally {
 			setCommandersLoading(false);
 		}
@@ -308,10 +298,10 @@ export default function DecksList({
 	}
 
 	function commandersByDeck(deck: Deck) {
-		const a = commanders.find(c => c.id === String(deck.commanderAId));
+		const a = commandersInDecks.find(c => c.id === String(deck.commanderAId));
 		const b =
 			deck.commanderBId != null
-				? commanders.find(c => c.id === String(deck.commanderBId))
+				? commandersInDecks.find(c => c.id === String(deck.commanderBId))
 				: null;
 
 		return { a, b };
@@ -398,6 +388,7 @@ export default function DecksList({
 			"/api/decks",
 			"/api/games",
 			"/api/commanders",
+			"/api/commanders-in-decks",
 			"/api/bootstrap",
 		]);
 
@@ -434,6 +425,7 @@ export default function DecksList({
 			"/api/decks",
 			"/api/games",
 			"/api/commanders",
+			"/api/commanders-in-decks",
 			"/api/bootstrap",
 		]);
 
@@ -509,6 +501,7 @@ export default function DecksList({
 			"/api/decks",
 			"/api/games",
 			"/api/commanders",
+			"/api/commanders-in-decks",
 			"/api/bootstrap",
 		]);
 
@@ -517,6 +510,9 @@ export default function DecksList({
 	}
 
 	const showLoadingOverlay = commandersLoading && !createDeckOpen;
+	const commanderSearchOptions = commandersLoaded
+		? commanderCatalog
+		: commandersInDecks;
 
 	return (
 		<section className="w-full max-w-md space-y-8">
@@ -582,7 +578,7 @@ export default function DecksList({
 											label="First commander"
 											selectedId={commanderAId}
 											selectedName={commanderAName}
-											commanders={commanders}
+											commanders={commanderSearchOptions}
 											onSelect={commander => handleCommanderSelect("create", "A", commander)}
 										/>
 
@@ -591,7 +587,7 @@ export default function DecksList({
 											label="Optional second commander"
 											selectedId={commanderBId}
 											selectedName={commanderBName}
-											commanders={commanders}
+											commanders={commanderSearchOptions}
 											excludedIds={commanderAId ? [commanderAId] : []}
 											onSelect={commander => handleCommanderSelect("create", "B", commander)}
 										/>
@@ -704,7 +700,7 @@ export default function DecksList({
 											label="First commander"
 											selectedId={editCommanderAId}
 											selectedName={editCommanderAName}
-											commanders={commanders}
+											commanders={commanderSearchOptions}
 											onSelect={commander => handleCommanderSelect("edit", "A", commander)}
 										/>
 
@@ -713,7 +709,7 @@ export default function DecksList({
 											label="Optional second commander"
 											selectedId={editCommanderBId}
 											selectedName={editCommanderBName}
-											commanders={commanders}
+											commanders={commanderSearchOptions}
 											excludedIds={editCommanderAId ? [editCommanderAId] : []}
 											onSelect={commander => handleCommanderSelect("edit", "B", commander)}
 										/>

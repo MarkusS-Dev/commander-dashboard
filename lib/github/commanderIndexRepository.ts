@@ -31,11 +31,17 @@ export type CommanderSummary = {
 	imageUrl?: string;
 };
 
+type CommanderCatalogEntry = {
+	id: string;
+	name: string;
+	manaCost: string;
+};
+
 type CommanderCache = {
 	totalCards: number;
 	updatedAt: string;
 	sourceUpdatedAt?: string;
-	commanders: CommanderSummary[];
+	commanders: CommanderCatalogEntry[];
 };
 
 type ScryfallBulkDataItem = {
@@ -121,12 +127,10 @@ async function fetchCommanderSourceUpdatedAt(): Promise<string | null> {
 async function fetchCommanderCacheFromScryfall(): Promise<CommanderCache> {
 	const baseUrl = `${SEARCH_URL}?q=${encodeURIComponent(SEARCH_QUERY)}&unique=cards&order=name&dir=asc&page=1`;
 	const firstPage = await fetchCommanderPage(baseUrl);
-	const commanders: CommanderSummary[] = firstPage.data.map(card => ({
+	const commanders: CommanderCatalogEntry[] = firstPage.data.map(card => ({
 		id: card.id,
 		name: card.name,
-		colors: card.colors ?? [],
 		manaCost: card.mana_cost ?? "",
-		imageUrl: commanderImageUrl(card),
 	}));
 
 	let nextPage = firstPage.next_page;
@@ -137,9 +141,7 @@ async function fetchCommanderCacheFromScryfall(): Promise<CommanderCache> {
 			...page.data.map(card => ({
 				id: card.id,
 				name: card.name,
-				colors: card.colors ?? [],
 				manaCost: card.mana_cost ?? "",
-				imageUrl: commanderImageUrl(card),
 			}))
 		);
 		nextPage = page.next_page;
@@ -151,13 +153,6 @@ async function fetchCommanderCacheFromScryfall(): Promise<CommanderCache> {
 		sourceUpdatedAt: await fetchCommanderSourceUpdatedAt() ?? new Date().toISOString(),
 		commanders,
 	};
-}
-
-function commanderNeedsHydration(commander: CommanderSummary | undefined): boolean {
-	if (!commander)
-		return true;
-
-	return !Array.isArray(commander.colors) || commander.colors.length === 0 && !commander.manaCost;
 }
 
 async function loadCommanderCache(): Promise<CommanderCache | null> {
@@ -228,7 +223,12 @@ function commanderMatchesQuery(commander: CommanderSummary, query: string) {
 
 export async function loadCommanderCatalog(): Promise<CommanderSummary[]> {
 	const cache = await getCommanderCache();
-	return cache.commanders;
+	return cache.commanders.map(commander => ({
+		id: commander.id,
+		name: commander.name,
+		colors: [],
+		manaCost: commander.manaCost,
+	}));
 }
 
 export async function resolveCommandersById(
@@ -250,13 +250,16 @@ export async function resolveCommandersById(
 
 		const direct = commandersById.get(id);
 		if (direct) {
-			if (Array.isArray(direct.colors) && direct.colors.length >= 0 && direct.imageUrl) {
-				resolved.push(direct);
-				continue;
-			}
-
 			const hydrated = await fetchCommanderById(id);
-			resolved.push(hydrated ?? direct);
+			resolved.push(
+				hydrated
+					?? {
+						id: direct.id,
+						name: direct.name,
+						colors: [],
+						manaCost: direct.manaCost,
+					}
+			);
 			continue;
 		}
 

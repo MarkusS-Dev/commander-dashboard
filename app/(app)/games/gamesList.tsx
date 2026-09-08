@@ -86,17 +86,21 @@ export default function GamesList({
 	}, [seatCount]);
 
 	async function loadAll() {
-		const [loadedPlayers, loadedDecks, loadedGames] = await Promise.all([
-			loadPlayers(),
-			loadDecks(),
-			loadGames(),
-		]);
+		try {
+			const [loadedPlayers, loadedDecks, loadedGames] = await Promise.all([
+				loadPlayers(),
+				loadDecks(),
+				loadGames(),
+			]);
 
-		setPlayers(loadedPlayers);
-		setDecks(loadedDecks);
-		setGames(loadedGames);
-		await loadCommandersForDecks(loadedDecks);
-		setHasLoadedData(true);
+			setPlayers(loadedPlayers);
+			setDecks(loadedDecks);
+			setGames(loadedGames);
+			await loadCommandersInDecks();
+			setHasLoadedData(true);
+		} catch {
+			setError("Failed to load game data");
+		}
 	}
 
 	async function loadPlayers() {
@@ -111,22 +115,9 @@ export default function GamesList({
 		return fetchJsonCached<Game[]>("/api/games", { ttlMs: 30_000 });
 	}
 
-	async function loadCommandersForDecks(loadedDecks: Deck[]) {
-		const ids = Array.from(
-			new Set(
-				loadedDecks
-					.flatMap(deck => [deck.commanderAId, deck.commanderBId])
-					.filter((id): id is string | number => id != null && id !== "")
-			)
-		);
-
-		if (ids.length === 0) {
-			setCommandersById({});
-			return;
-		}
-
+	async function loadCommandersInDecks() {
 		const commanders = await fetchJsonCached<CommanderSummary[]>(
-			`/api/commanders?ids=${ids.map(id => encodeURIComponent(String(id))).join(",")}`,
+			"/api/commanders-in-decks",
 			{ ttlMs: 30_000 }
 		);
 		setCommandersById(
@@ -177,9 +168,11 @@ export default function GamesList({
 			setPlayers(loadedPlayers);
 			setDecks(loadedDecks);
 			setGames(loadedGames);
-			await loadCommandersForDecks(loadedDecks);
+			await loadCommandersInDecks();
 			setHasLoadedData(true);
 			setLogGameOpen(true);
+		} catch {
+			setError("Failed to load game setup");
 		} finally {
 			setLogGameLoading(false);
 		}
@@ -234,6 +227,7 @@ export default function GamesList({
 			"/api/decks",
 			"/api/players",
 			"/api/commanders",
+			"/api/commanders-in-decks",
 			"/api/bootstrap",
 		]);
 
