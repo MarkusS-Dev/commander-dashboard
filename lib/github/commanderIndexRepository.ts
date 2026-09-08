@@ -51,6 +51,21 @@ const CACHE_PATH = "data/commanders-cache.json";
 const SEARCH_URL = "https://api.scryfall.com/cards/search";
 const SEARCH_QUERY = "is:commander";
 
+function mergeWithBundledCommanderCache(cache: CommanderCache): CommanderCache {
+	const bundled = bundledCommanderCache as CommanderCache;
+	const bundledIds = new Set(bundled.commanders.map(commander => commander.id));
+
+	return {
+		...cache,
+		// The bundled catalog is deployed with the app and takes precedence over
+		// an older GitHub cache. Keep any remote-only cards as well.
+		commanders: [
+			...bundled.commanders,
+			...cache.commanders.filter(commander => !bundledIds.has(commander.id)),
+		],
+	};
+}
+
 function normalize(text: string) {
 	return text.trim().toLowerCase();
 }
@@ -148,7 +163,9 @@ function commanderNeedsHydration(commander: CommanderSummary | undefined): boole
 async function loadCommanderCache(): Promise<CommanderCache | null> {
 	try {
 		const cache = await readJson<CommanderCache>(CACHE_PATH);
-		return Array.isArray(cache.commanders) ? cache : null;
+		return Array.isArray(cache.commanders)
+			? mergeWithBundledCommanderCache(cache)
+			: bundledCommanderCache as CommanderCache;
 	} catch {
 		// Keep deck creation available when the optional GitHub-backed store is
 		// temporarily unavailable. The bundled cache is included in every build.
