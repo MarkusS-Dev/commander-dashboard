@@ -1,6 +1,9 @@
 import GamesList from "./gamesList";
 import { loadGamesPageData } from "@/lib/bootstrapData";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function GamesPage() {
 	const data = await loadGamesPageData();
 

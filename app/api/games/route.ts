@@ -7,7 +7,7 @@ export async function GET() {
 	const games = await loadGames();
 	return Response.json(games, {
 		headers: {
-			"Cache-Control": "public, max-age=30, stale-while-revalidate=120",
+			"Cache-Control": "no-store",
 		},
 	});
 }
